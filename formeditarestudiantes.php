@@ -11,6 +11,7 @@
 <body>
     <?php
         include("nuevo-header.php");
+        require("conexion.php");
 
         // Función para obtener los datos del estudiante
         function get_student_data($id) {
@@ -68,9 +69,9 @@
         $titulo_certificado = $_POST['titulo_certificado'];
         $titulo_tecnico = $_POST['titulo_tecnico'];
         $titulo_hab = $_POST['titulo_hab'];
-        $doc_dni = isset($_POST['doc_dni'])  ? 'Sí' : 'No';
-        $doc_medico = isset($_POST['doc_medico'])  ? 'Sí' : 'No';
-        $analitico = isset($_POST['analitico'])  ? 'Sí' : 'No';
+        $doc_dni = isset($_POST['doc_dni']) ? 'Sí' : 'No';
+        $doc_medico = isset($_POST['doc_medico']) ? 'Sí' : 'No';
+        $analitico = isset($_POST['analitico']) ? 'Sí' : 'No';
         $doc_nacimiento = isset($_POST['doc_nacimiento']) ? 'Sí' : 'No';
         $documentacion_completa = $_POST['documentacion_completa'];
         $repositorio_documentacion = $_POST['repositorio_documentacion'];
@@ -78,17 +79,6 @@
         $estado_inscripcion = $_POST['estado_inscripcion'];
         $estado_estudiante = $_POST['estado_estudiante'];
         $observaciones = $_POST['observaciones'];
-
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "c1602068_isft225";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        if ($conn->connect_error) {
-            die("Conexión fallida: " . $conn->connect_error);
-        }
 
         $sql = "UPDATE estudiantes SET nro_legajo='$nro_legajo', tipo_documento='$tipo_documento', dni_estudiante='$dni_estudiante', nombre='$nombre', apellido='$apellido', email='$email', telefono='$telefono', genero='$genero', fecha_nacimiento='$fecha_nacimiento', pais_nacimiento='$pais_nacimiento', lugar_nacimiento='$lugar_nacimiento', familia_a_cargo='$familia_a_cargo', hijos='$hijos', trabaja='$trabaja', pais_dom='$pais_dom', provincia='$provincia', calle='$calle', numero='$numero', piso='$piso', departamento='$departamento', edificio='$edificio', localidad='$localidad', partido='$partido', codigo_postal='$codigo_postal', nombre_escuela='$nombre_escuela', titulo_secundario='$titulo_secundario', anio_de_egreso='$anio_de_egreso', titulo_certificado='$titulo_certificado', titulo_tecnico='$titulo_tecnico', titulo_hab='$titulo_hab', doc_dni='$doc_dni', doc_medico='$doc_medico', analitico='$analitico', doc_nacimiento='$doc_nacimiento', documentacion_completa='$documentacion_completa', repositorio_documentacion='$repositorio_documentacion', plan_carrera='$plan_carrera', estado_inscripcion='$estado_inscripcion', estado_estudiante='$estado_estudiante', observaciones='$observaciones' WHERE id_estudiante='$id_estudiante'";
 
@@ -134,6 +124,8 @@
                 <div class="columna">
                     <label class="form-label text-black-50" for="nombre">Nombre completo *</label>
                     <input type="text" class="form-control upLetra" id="nombre" name="nombre" placeholder="Nombre" value="<?php echo htmlspecialchars($student_data['nombre'] ?? ''); ?>" required pattern="^[a-zA-Z\s]{3,}$" />
+                    <!-- Cada una de las lineas de codigo php del formulario traen los datos del estudiante a sus respectivos campos y el usuario tiene la posibilidad de editarlas y que estas sean cargadas nuevamente a la base de datos-->
+
                 </div>
                 <div class="columna">
                     <label class="form-label text-black-50" for="apellido">Apellido completo *</label>
@@ -399,7 +391,5 @@
         }
         });
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9iIA5g08fN1uMzKjRsjYAmk/JEd1a2T2OXFik7kA9B43a8b2AT" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-QUT2k+S5b0EXG1g9U5B2rNwM8D0myO1yRzXp5zqFvKeMTff3S5uDDUqFMRh06jJr" crossorigin="anonymous"></script>
 </body>
 </html>

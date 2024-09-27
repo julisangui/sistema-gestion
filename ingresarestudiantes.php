@@ -13,9 +13,9 @@
   <?php
 
     include("nuevo-header.php");
+    require("conexion.php");
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      // Datos del formulario
       $nombre = $_POST['nombre'];
       $apellido = $_POST['apellido'];
       $email = $_POST['email'];
@@ -46,9 +46,9 @@
       $titulo_certificado = $_POST['titulo_certificado'];
       $titulo_tecnico = $_POST['titulo_tecnico'];
       $titulo_hab = $_POST['titulo_hab'];
-      $doc_dni = isset($_POST['doc_dni'])  ? 'Sí' : 'No';
-      $doc_medico = isset($_POST['doc_medico'])  ? 'Sí' : 'No';
-      $analitico = isset($_POST['analitico'])  ? 'Sí' : 'No';
+      $doc_dni = isset($_POST['doc_dni']) ? 'Sí' : 'No';
+      $doc_medico = isset($_POST['doc_medico']) ? 'Sí' : 'No';
+      $analitico = isset($_POST['analitico']) ? 'Sí' : 'No';
       $doc_nacimiento = isset($_POST['doc_nacimiento']) ? 'Sí' : 'No';
       $documentacion_completa = $_POST['documentacion_completa'];
       $repositorio_documentacion = $_POST['repositorio_documentacion'];
@@ -57,21 +57,6 @@
       $estado_estudiante = $_POST['estado_estudiante'];
       $observaciones = $_POST['observaciones'];
 
-      // Datos de la base de datos
-      $servername = "localhost";
-      $username = "root";
-      $password = "";
-      $dbname = "c1602068_isft225";
-
-      // Crear conexión
-      $conn = new mysqli($servername, $username, $password, $dbname);
-
-      // Verificar conexión
-      if ($conn->connect_error) {
-        die("Conexión fallida: " . $conn->connect_error);
-      }
-
-      // Consulta preparada para insertar datos en SQL
       $sql = "INSERT INTO estudiantes (nro_legajo, tipo_documento, dni_estudiante, nombre, apellido, email, telefono, genero, fecha_nacimiento, pais_nacimiento, lugar_nacimiento, familia_a_cargo, hijos, trabaja, pais_dom, provincia, calle, numero, piso, departamento, edificio, localidad, partido, codigo_postal, nombre_escuela, titulo_secundario, anio_de_egreso, titulo_certificado, titulo_tecnico, titulo_hab, doc_dni, doc_medico, analitico, doc_nacimiento, documentacion_completa, repositorio_documentacion, plan_carrera, estado_inscripcion, estado_estudiante, observaciones) VALUES ('$nro_legajo', '$tipo_documento', '$dni_estudiante', '$nombre', '$apellido', '$email', '$telefono', '$genero', '$fecha_nacimiento', '$pais_nacimiento', '$lugar_nacimiento', '$familia_a_cargo', '$hijos', '$trabaja', '$pais_dom', '$provincia', '$calle', '$numero', '$piso', '$departamento', '$edificio', '$localidad', '$partido', '$codigo_postal', '$nombre_escuela', '$titulo_secundario', '$anio_de_egreso', '$titulo_certificado', '$titulo_tecnico', '$titulo_hab', '$doc_dni', '$doc_medico', '$analitico', '$doc_nacimiento', '$documentacion_completa', '$repositorio_documentacion', '$plan_carrera', '$estado_inscripcion', '$estado_estudiante', '$observaciones')";
           
       // Ejecutar la consulta

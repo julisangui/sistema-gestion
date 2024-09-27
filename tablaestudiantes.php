@@ -9,7 +9,7 @@
   <title>Tabla estudiantes</title>
 </head>
 <body>
-  
+
   <?php
     include("nuevo-header.php");
   ?>
@@ -25,6 +25,7 @@
   </div>
 
   <style>
+    
     .table {
       width: 100%;
       margin: 0 auto;
@@ -69,30 +70,15 @@
       color: #2ca0dd;
     }
 
-    @media(max-width:900px) {
-      table {
-        display: block;
-      }
-    }
   </style>
 
   <?php
-    // Consulta y procesamiento de datos
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "c1602068_isft225";
-
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    if ($conn->connect_error) {
-      die("Conexión fallida: " . $conn->connect_error);
-    }
-
+    require("conexion.php");
+    
     $sql = "SELECT id_estudiante, nro_legajo, tipo_documento, dni_estudiante, nombre, apellido, email, telefono, estado_estudiante, documentacion_completa FROM estudiantes";
 
-    if (isset($_GET['enviar'])) {
-      $busqueda = $_GET['busqueda'];
+    if (isset($_GET['enviar'])) { //El if se ejecutara solo si el usuario presiona el boton buscar.
+      $busqueda = $_GET['busqueda']; //Aca se lee lo que pone el usuario para buscar y el %(comodin) busca coincidencias.
       $sql .= " WHERE nro_legajo LIKE '%$busqueda%' 
         OR nombre LIKE '%$busqueda%' 
         OR apellido LIKE '%$busqueda%' 
@@ -100,56 +86,54 @@
         OR estado_estudiante LIKE '%$busqueda%'";
     }
 
-    $result = $conn->query($sql);
+    $result = $conn->query($sql); //Se conecta con la base de datos las consultas sql que estan siendo ejecutadas.
 
   ?>
-
-    <div class="container">
-        <div class="table-responsive">
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>DNI</th>
-                        <th>Nro Legajo</th>
-                        <th>Nombre</th>
-                        <th>Apellido</th>
-                        <th>Email</th>
-                        <th>Teléfono</th>
-                        <th>Estado</th>
-                        <th>Documentación</th>
-                        <th>Editar</th>
-                        <th>Ver</th>
-                        <th>Asignar materia</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    if ($result->num_rows > 0) {
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr>";
-                            echo "<td>" . $row["dni_estudiante"] . "</td>";
-                            echo "<td>" . $row["nro_legajo"] . "</td>";
-                            echo "<td>" . $row["nombre"] . "</td>";
-                            echo "<td>" . $row["apellido"] . "</td>";
-                            echo "<td>" . $row["email"] . "</td>";
-                            echo "<td>" . $row["telefono"] . "</td>";
-                            echo "<td>" . $row["estado_estudiante"] . "</td>";
-                            echo "<td>" . $row["documentacion_completa"] . "</td>";
-                            echo "<td><a href='formeditarestudiantes.php?id_estudiante=" . $row["id_estudiante"] . "' class='text-primary'><i class='bi bi-pencil-fill'></i></a></td>";
-                            echo "<td><a href='listarestudiante.php?id_estudiante=" . $row["id_estudiante"] . "' class='text-primary'><i class='bi bi-eye-fill'></i></a></td>";
-                            echo "<td><a href='asignarmateriaestudiante.php?id_estudiante=" . $row["id_estudiante"] . "' class='text-primary'><i class='bi bi-journal-text'></i></a></td>";
-                            echo "</tr>";
-                        }
-                    } else {
-                        echo "<tr><td colspan='10' class='text-center'>No se encontraron resultados.</td></tr>";
-                    }
-
-                    $conn->close();
-                    ?>
-                </tbody>
-            </table>
-        </div>
+  <div class="container">
+    <div class="table-responsive">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>DNI</th>
+            <th>Nro Legajo</th>
+            <th>Nombre</th>
+            <th>Apellido</th>
+            <th>Email</th>
+            <th>Teléfono</th>
+            <th>Estado</th>
+            <th>Documentación</th>
+            <th>Editar</th>
+            <th>Ver</th>
+            <th>Asignar materia</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php
+            if ($result->num_rows > 0) {
+              while ($row = $result->fetch_assoc()) {//fetch_assoc() significa que te da los datos de cada fila de una tabla en la base de datos y los pasa a cada una de las filas de la tabla en la pagina.
+                echo "<tr>";
+                echo "<td>" . $row["dni_estudiante"] . "</td>";
+                echo "<td>" . $row["nro_legajo"] . "</td>";
+                echo "<td>" . $row["nombre"] . "</td>";
+                echo "<td>" . $row["apellido"] . "</td>";
+                echo "<td>" . $row["email"] . "</td>";
+                echo "<td>" . $row["telefono"] . "</td>";
+                echo "<td>" . $row["estado_estudiante"] . "</td>";
+                echo "<td>" . $row["documentacion_completa"] . "</td>";
+                echo "<td><a href='formeditarestudiantes.php?id_estudiante=" . $row["id_estudiante"] . "' class='text-primary'><i class='bi bi-pencil-fill'></i></a></td>";
+                echo "<td><a href='listarestudiante.php?id_estudiante=" . $row["id_estudiante"] . "' class='text-primary'><i class='bi bi-eye-fill'></i></a></td>";
+                echo "<td><a href='asignarmateriaestudiante.php?id_estudiante=" . $row["id_estudiante"] . "' class='text-primary'><i class='bi bi-journal-text'></i></a></td>";
+                echo "</tr>";
+              }
+            } else {
+              echo "<tr><td colspan='10' class='text-center'>No se encontraron resultados.</td></tr>";
+            }
+            $conn->close();
+          ?>
+        </tbody>
+      </table>
     </div>
+  </div>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-OPxiZjwhSQvv9B3ILwxf6UezeHAzVksLUw+HRTRWc1IfV6p10Bm4sTI6yU5U1mXt" crossorigin="anonymous"></script>
 </body>
 </html>

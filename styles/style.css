@@ -1,20 +1,21 @@
 *{
     margin:0;
     padding:0;
-    
 }
 
 body{
     height:100vh;
     overflow:auto;
 }
+
 .menu, .menu-mobile{
     background: #01417F; 
 }
+
 .min-height {
     min-height: 100%;
     min-width: 100%;
-  }
+}
 
 .sidebar-height{
     min-height:100vh;
@@ -30,17 +31,21 @@ body{
     border-radius: 4px; 
     background-color: #152259; 
 }
+
 .bg-blue-dark{
     background-color: #152259;
     border-color: #152259;
 }
+
 .bg-blue-dark:checked{
     background-color: #152259;
     border-color: #152259;
 }
+
 .menu-icon:hover,.menu-icon:active, .menu-icon:focus-visible{
     background:#509CDB;
 }
+
 .rounded-50{
     border-radius: 50%;
 }
@@ -119,7 +124,6 @@ input:required{
     border: 1px solid red;
 }
 
-  
 
 /* Media Query para vista celular */
 @media (max-width: 767px) {
@@ -131,7 +135,4 @@ input:required{
     .menu-mobile{
         background-color:#ffffff00;
     }
-  
-    
-
 }
