@@ -377,8 +377,21 @@
                 <textarea class="form-control" id="observaciones" name="observaciones" placeholder="Observaciones" rows="3"><?php echo htmlspecialchars($student_data['observaciones'] ?? ''); ?></textarea>
             </div>
         </div>
+        <a href="tablaestudiantes.php" class="btn btn-secondary">Volver</a>
         <button type="submit" class="btn btn-primary">Actualizar Datos</button>
     </form>
+
+    <style>
+        .btn.btn-primary{
+            background-color: #083461;
+            border: none;
+        }
+
+        .btn.btn-primary:hover{
+            background-color:#2ca0dd;
+        }
+    </style>
+
     <script>
         document.getElementById('repositorio_documentacion').addEventListener('input', function () {
         const input = this;

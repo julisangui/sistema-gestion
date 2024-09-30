@@ -372,6 +372,18 @@
           <a href="formeditarestudiantes.php?id_estudiante=<?php echo htmlspecialchars($student_data['id_estudiante'] ?? ''); ?>" class="btn btn-primary">Editar</a>
         </div>
     </form>
+    
+    <style>
+        .btn.btn-primary{
+            background-color: #083461;
+            border: none;
+        }
+
+        .btn.btn-primary:hover{
+            background-color:#2ca0dd;
+        }
+    </style>
+
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9iIA5g08fN1uMzKjRsjYAmk/JEd1a2T2OXFik7kA9B43a8b2AT" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.min.js" integrity="sha384-QUT2k+S5b0EXG1g9U5B2rNwM8D0myO1yRzXp5zqFvKeMTff3S5uDDUqFMRh06jJr" crossorigin="anonymous"></script>
 </body>

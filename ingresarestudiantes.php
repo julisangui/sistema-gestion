@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.4/font/bootstrap-icons.css">
-  <link rel="stylesheet" href="./styles/styletablas.css" type="text/css">
-  <link rel="stylesheet" href="./styles/estudiantes.css" type="text/css">
+  <link rel="stylesheet" href="styles/styletablas.css" type="text/css">
+  <link rel="stylesheet" href="styles/estudiantes.css" type="text/css">
   <title>Formulario estudiante</title>
 </head>
 <body>
@@ -366,6 +366,18 @@
       <button type="submit" class="btn btn-primary">Guardar</button>
     </div>
   </form>
+
+  <style>
+    .btn.btn-primary{
+      background-color: #083461;
+      border: none;
+    }
+
+    .btn.btn-primary:hover{
+      background-color:#2ca0dd;
+    }
+  </style>
+
   <script>document.getElementById('repositorio_documentacion').addEventListener('input', function () {
     const input = this;
     const pattern = /^https:\/\/drive\.google\.com\/.*$/;

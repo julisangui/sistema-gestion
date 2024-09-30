@@ -82,30 +82,7 @@ input:hover, select:hover{
 .btn-width, .w50, #codigo_postal {
   width: 50%;
 }
-  
-.btnf {
-  text-align: center;
-  background: #6a9cd1;
-  color: #fff;
-  padding: 10px 10px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-  
-.btn-bg {
-  background: #01417f;
-}
-  
-.btn-ver, .btn-adj {
-  padding: 0.1rem;
-  margin-bottom: 0.3rem;
-}
-  
-.brnone, .dnone {
-  display: none;
-}
-  
+
 #div-observaciones {
   width: 100%;
 }
