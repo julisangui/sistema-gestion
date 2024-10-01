@@ -42,7 +42,7 @@
             }
 
             $stmt_materias->close();
-            exit(); // Termina el script aquí para evitar que se cargue el resto del HTML.
+            exit(); // Termina el script aca para evitar que se cargue el resto del HTML.
         }
 
         // Incluir el header fuera de la funcion que trae las materias.
@@ -90,7 +90,7 @@
                         </thead>
                         <tbody>                    
                             <?php
-                                // Traer los datos del estudiante.
+                                // Trae los datos del estudiante.
                                 $sql_estudiante = "SELECT dni_estudiante, nro_legajo, nombre, apellido, plan_carrera FROM estudiantes WHERE id_estudiante = ?";
                                 $stmt_estudiante = $conn->prepare($sql_estudiante);
                                 $stmt_estudiante->bind_param("i", $id_estudiante);
@@ -122,7 +122,6 @@
                         <option value="2">Año 2</option>
                         <option value="3">Año 3</option>
                     </select>
-
                     <label class="form-label text-black-50 mt-3">Asignar materia:</label>
                     <div id="materias">
                         <!-- Aca se cargan las materias segun su codigo numerico -->
