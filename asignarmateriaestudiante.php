@@ -10,7 +10,7 @@
     <?php
         require("conexion.php");
 
-        // Trae los datos de un estudiante a traves del ID
+        // Verifica si se ha pasado el ID de estudiante
         if (isset($_GET['id_estudiante'])) {
             $id_estudiante = $_GET['id_estudiante'];
         } else {
@@ -18,18 +18,51 @@
             exit();
         }
 
-        // A traves de un select en donde se elige el año (anio_carrera), se trae las materias de dicha carrera dependiendo del año seleccionado
+        // Procesa la asignación de materias seleccionadas
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            if (isset($_POST['asignar_materia'])) {
+                $materias_seleccionadas = $_POST['asignar_materia'];
+                
+                // Inserta las materias seleccionadas en la tabla estudiante_materia
+                $sql_insert = "INSERT INTO estudiante_materia (id_estudiante, id_materia) VALUES (?, ?)";
+                $stmt_insert = $conn->prepare($sql_insert);
+
+                foreach ($materias_seleccionadas as $id_materia) {
+                    $stmt_insert->bind_param("ii", $id_estudiante, $id_materia);
+                    $stmt_insert->execute();
+                }
+
+                $stmt_insert->close();
+                $mensaje = "<div class='container mt-4 style= 'Margin: 0 auto';'>
+                                    <div class='alert alert-success text-center' style='max-width: 95%;'>
+                                        <h4 class='alert-heading'>¡Materias asignadas correctamente!</h4>
+                                        <hr>
+                                        <p>El registro se ha guardado exitosamente en la base de datos.</p>
+                                    </div>
+                                </div>";
+            }
+            else {
+                $mensaje = "<div class='container mt-4 style= 'Margin: 0 auto';'>
+                                <div class='alert alert-danger text-center' style='max-width: 95%;'>
+                                    <h4 class='alert-heading'>¡Error al asignar las materias!</h4>
+                                    <hr>
+                                    <p>Hubo un problema al asignar las materias: " . $conn->error . "</p>
+                                </div>
+                            </div>";
+            }
+        }
+
+        // A través del select se traen las materias del año seleccionado
         if (isset($_GET['anio_carrera'])) {
             $anio_carrera = $_GET['anio_carrera'];
 
-            // Consulta para obtener las materias según el año (anio_carrera)
+            // Consulta para obtener las materias según el año
             $sql_materias = "SELECT id_materia, denominacion_materia FROM materia WHERE anio_carrera = ?";
-            $stmt_materias = $conn->prepare($sql_materias); // Prepara la consulta
-            $stmt_materias->bind_param("i", $anio_carrera); // Reemplaza el "?" en la consulta con el número entero del select
-            $stmt_materias->execute(); // Se ejecuta la consulta
-            $result_materias = $stmt_materias->get_result(); // Obtiene el resultado
+            $stmt_materias = $conn->prepare($sql_materias);
+            $stmt_materias->bind_param("i", $anio_carrera);
+            $stmt_materias->execute();
+            $result_materias = $stmt_materias->get_result();
 
-            // Luego de obtener los resultados, se ordenan en un div con el nombre de la materia y un checkbox para asignárselo al alumno
             if ($result_materias->num_rows > 0) {
                 while ($rowm = $result_materias->fetch_assoc()) {
                     echo '<div class="form-check">';
@@ -42,10 +75,10 @@
             }
 
             $stmt_materias->close();
-            exit(); // Termina el script aquí para evitar que se cargue el resto del HTML
+            exit();
         }
 
-        // Incluir el header fuera de la función que trae las materias
+        // Incluir el header
         include('nuevo-header.php');
     ?>
 
@@ -96,7 +129,6 @@
                                 $stmt_estudiante->execute();
                                 $result_sql = $stmt_estudiante->get_result();
                                 
-                                // Completa la tabla con los datos del estudiante según su ID
                                 if ($result_sql->num_rows > 0) {
                                     $fila = $result_sql->fetch_assoc();     
                                     echo "<tr>";
@@ -130,21 +162,24 @@
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
+
+            <?php echo $mensaje ?>
+
         </div>
     </main>
     <script>
         function cargarMaterias() {
             const anio_carrera = document.getElementById('anio_carrera').value;
-            const xhr = new XMLHttpRequest(); // Solicita información al PHP y la trae de vuelta
+            const xhr = new XMLHttpRequest();
             xhr.open('GET', `asignarmateriaestudiante.php?anio_carrera=${anio_carrera}&id_estudiante=<?=$id_estudiante?>`, true);
-            xhr.onload = function() { // Función para mostrar los resultados de la solicitud
+            xhr.onload = function() {
                 if (xhr.status === 200) {
                     document.getElementById('materias').innerHTML = xhr.responseText;
                 } else {
                     console.error('Error al cargar las materias: ' + xhr.status);
                 }
             };
-            xhr.send(); // Trae la información del PHP del inicio de la página
+            xhr.send();
         }
     </script>
 </body>

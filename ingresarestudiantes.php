@@ -64,21 +64,20 @@
         echo "
         <div class='container mt-4 style= 'Margin: 0 auto';'>
             <div class='alert alert-success text-center' style='max-width: 95%;'>
-                <h4 class='alert-heading'>¡Formulario enviado correctamente!</h4>
-                <p>El registro se ha guardado exitosamente en la base de datos.</p>
+                <h4 class='alert-heading'>¡Datos actualizados correctamente!</h4>
+                <p>El registro se ha actualizado exitosamente en la base de datos.</p>
                 <hr>
                 <a href='tablaestudiantes.php' class='btn btn-primary'>Ver lista de estudiantes</a>
             </div>
         </div>";
-      }
-      else {
-        echo "
-        <div class='container mt-4 d-flex justify-content-center'>
-            <div class='alert alert-danger text-center' style='max-width: 95%;'>
-                <h4 class='alert-heading'>Error al cargar el registro</h4>
-                <p>Hubo un problema al guardar los datos: " . $conn->error . "</p>
-            </div>
-        </div>";
+      } else {
+          echo "
+          <div class='container mt-4 style= 'Margin: 0 auto';'>
+              <div class='alert alert-danger text-center' style='max-width: 95%;'>
+                  <h4 class='alert-heading'>Error al actualizar el registro</h4>
+                  <p>Hubo un problema al guardar los datos: " . $conn->error . "</p>
+              </div>
+          </div>";
       }
 
       // Cerrar la conexión

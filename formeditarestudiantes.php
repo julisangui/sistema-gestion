@@ -94,7 +94,7 @@
             </div>";
         } else {
             echo "
-            <div class='container mt-4 d-flex justify-content-center'>
+            <div class='container mt-4 style= 'Margin: 0 auto';'>
                 <div class='alert alert-danger text-center' style='max-width: 95%;'>
                     <h4 class='alert-heading'>Error al actualizar el registro</h4>
                     <p>Hubo un problema al guardar los datos: " . $conn->error . "</p>
