@@ -10,8 +10,8 @@
 </head>
 <body>
     <?php
-        include("nuevo-header.php");
         require("conexion.php");
+        include("nuevo-header.php");
 
         // Función para obtener los datos del estudiante
         function get_student_data($id) {
@@ -351,10 +351,29 @@
             <div class="filas">
                 <div class="fila">
                     <div class="columna">
-                        <label class="form-label text-black-50" for="plan_carrera">Plan de Carrera *</label>
-                        <select class="form-control select" id="plan_carrera" name="plan_carrera" placeholder="Plan de Carrera" required>
-                            <option value="Tecnicatura superior en desarrollo de software" <?php if (isset($student_data['plan_carrera']) && $student_data['plan_carrera'] == 'Tecnicatura superior en desarrollo de software') echo 'selected'; ?>>Tecnicatura superior en desarrollo de software</option>
-                        </select>  
+                        <?php
+                            // Consulta para obtener las carreras
+                            $sql = "SELECT nombre_carrera FROM carrera";
+                            $result = $conn->query($sql);
+
+                            if ($result->num_rows > 0) {
+                                echo '<label class="form-label text-black-50" for="plan_carrera">Plan de Carrera *</label>';
+                                echo '<select class="form-control select" id="plan_carrera" name="plan_carrera" required>';
+                                echo '<option hidden>Seleccionar</option>';
+                                    // Iteramos sobre los resultados y generamos las opciones
+                                    while($row = $result->fetch_assoc()) {
+                                        $nombre_carrera = htmlspecialchars($row['nombre_carrera']);
+
+                                        // Si el valor coincide con la carrera seleccionada en $student_data, se marca como seleccionada
+                                        $selected = (isset($student_data['plan_carrera']) && $student_data['plan_carrera'] == $nombre_carrera) ? 'selected' : '';
+                                        echo '<option value="' . $nombre_carrera . '" ' . $selected . '>' . $nombre_carrera . '</option>';
+                                    }
+                                echo '</select>';
+                            }
+                            else {
+                                echo "No se encontraron carreras.";
+                            }
+                        ?>
                     </div>
                     <div class="columna">
                         <label class="form-label text-black-50" for="estado_inscripcion">Estado de Inscripción *</label>

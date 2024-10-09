@@ -10,7 +10,7 @@
     <?php
         require("conexion.php");
 
-        // Trae los datos de un estudiante a traves del ID, si encuentra el ID del alumno solicitado, trae sus datos, sino imprime un mensaje de error.
+        // Trae los datos de un estudiante a traves del ID
         if (isset($_GET['id_estudiante'])) {
             $id_estudiante = $_GET['id_estudiante'];
         } else {
@@ -18,18 +18,18 @@
             exit();
         }
 
-        // A traves de un select en donde se elige el año (cod_num), se trae las materias de dicha carrera dependiendo del año seleccionado.
-        if (isset($_GET['cod_num'])) {
-            $cod_num = $_GET['cod_num'];
+        // A traves de un select en donde se elige el año (anio_carrera), se trae las materias de dicha carrera dependiendo del año seleccionado
+        if (isset($_GET['anio_carrera'])) {
+            $anio_carrera = $_GET['anio_carrera'];
 
-            // Consulta para obtener las materias según el año (cod_num).
-            $sql_materias = "SELECT id_materia, denominacion_materia FROM materia WHERE cod_num = ?";
-            $stmt_materias = $conn->prepare($sql_materias); // Prepara la consulta.
-            $stmt_materias->bind_param("i", $cod_num); // Reemplaza el "?" en la consulta con el numero entero del select.
-            $stmt_materias->execute(); // Se ejecuta la consulta.
-            $result_materias = $stmt_materias->get_result(); // Obtiene el resultado.
+            // Consulta para obtener las materias según el año (anio_carrera)
+            $sql_materias = "SELECT id_materia, denominacion_materia FROM materia WHERE anio_carrera = ?";
+            $stmt_materias = $conn->prepare($sql_materias); // Prepara la consulta
+            $stmt_materias->bind_param("i", $anio_carrera); // Reemplaza el "?" en la consulta con el número entero del select
+            $stmt_materias->execute(); // Se ejecuta la consulta
+            $result_materias = $stmt_materias->get_result(); // Obtiene el resultado
 
-            // Luego de obtener los resultados, se ordenan en un div con el nombre de la materia y un checkbox para asignarselo al alumno.
+            // Luego de obtener los resultados, se ordenan en un div con el nombre de la materia y un checkbox para asignárselo al alumno
             if ($result_materias->num_rows > 0) {
                 while ($rowm = $result_materias->fetch_assoc()) {
                     echo '<div class="form-check">';
@@ -42,10 +42,10 @@
             }
 
             $stmt_materias->close();
-            exit(); // Termina el script aca para evitar que se cargue el resto del HTML.
+            exit(); // Termina el script aquí para evitar que se cargue el resto del HTML
         }
 
-        // Incluir el header fuera de la funcion que trae las materias.
+        // Incluir el header fuera de la función que trae las materias
         include('nuevo-header.php');
     ?>
 
@@ -61,16 +61,15 @@
             text-align: center;
         }
 
-        .btn.btn-primary{
+        .btn.btn-primary {
             margin-top: 15px;
             background-color: #083461;
             border: none;
         }
 
-        .btn.btn-primary:hover{
-            background-color:#2ca0dd;
+        .btn.btn-primary:hover {
+            background-color: #2ca0dd;
         }
-
     </style>
     <main>
         <div class="container d-block p-3 m-4 h-100">
@@ -90,14 +89,14 @@
                         </thead>
                         <tbody>                    
                             <?php
-                                // Trae los datos del estudiante.
+                                // Trae los datos del estudiante
                                 $sql_estudiante = "SELECT dni_estudiante, nro_legajo, nombre, apellido, plan_carrera FROM estudiantes WHERE id_estudiante = ?";
                                 $stmt_estudiante = $conn->prepare($sql_estudiante);
                                 $stmt_estudiante->bind_param("i", $id_estudiante);
                                 $stmt_estudiante->execute();
                                 $result_sql = $stmt_estudiante->get_result();
                                 
-                                // Completa la tabla con los datos del estudiante segun su ID.
+                                // Completa la tabla con los datos del estudiante según su ID
                                 if ($result_sql->num_rows > 0) {
                                     $fila = $result_sql->fetch_assoc();     
                                     echo "<tr>";
@@ -116,7 +115,7 @@
                 </div>
                 <div class="col-md-5">      
                     <label class="form-label text-black-50">Seleccionar Año:</label>
-                    <select id="cod_num" name="cod_num" class="form-select" onchange="cargarMaterias()">
+                    <select id="anio_carrera" name="anio_carrera" class="form-select" onchange="cargarMaterias()">
                         <option hidden>Seleccione un año</option>
                         <option value="1">Año 1</option>
                         <option value="2">Año 2</option>
@@ -124,7 +123,7 @@
                     </select>
                     <label class="form-label text-black-50 mt-3">Asignar materia:</label>
                     <div id="materias">
-                        <!-- Aca se cargan las materias segun su codigo numerico -->
+                        <!-- Aquí se cargan las materias según su respectivo año -->
                     </div>
                 </div>
                 <div class="col-md-12 mt-2">
@@ -135,17 +134,17 @@
     </main>
     <script>
         function cargarMaterias() {
-            const codNum = document.getElementById('cod_num').value;
-            const xhr = new XMLHttpRequest(); // Solicita informacion al php del inicio y la trae de vuelta.
-            xhr.open('GET', `asignarmateriaestudiante.php?cod_num=${codNum}&id_estudiante=<?=$id_estudiante?>`, true);
-            xhr.onload = function() { // Funcion para mostrar los resultados de la solicitud.
+            const anio_carrera = document.getElementById('anio_carrera').value;
+            const xhr = new XMLHttpRequest(); // Solicita información al PHP y la trae de vuelta
+            xhr.open('GET', `asignarmateriaestudiante.php?anio_carrera=${anio_carrera}&id_estudiante=<?=$id_estudiante?>`, true);
+            xhr.onload = function() { // Función para mostrar los resultados de la solicitud
                 if (xhr.status === 200) {
                     document.getElementById('materias').innerHTML = xhr.responseText;
                 } else {
                     console.error('Error al cargar las materias: ' + xhr.status);
                 }
             };
-            xhr.send(); // Trae la informacion del php del inicio de la pagina.
+            xhr.send(); // Trae la información del PHP del inicio de la página
         }
     </script>
 </body>

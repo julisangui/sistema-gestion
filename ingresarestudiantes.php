@@ -12,8 +12,8 @@
 <body>
   <?php
 
-    include("nuevo-header.php");
     require("conexion.php");
+    include("nuevo-header.php");
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $nombre = $_POST['nombre'];
@@ -331,11 +331,25 @@
       <div class="filas">
         <div class="fila">
           <div class="columna">
-            <label class="form-label text-black-50" for="plan_carrera">Plan de Carrera *</label>
-            <select class="form-control select" id="plan_carrera" name="plan_carrera" placeholder="Plan de Carrera" required>
-              <option hidden>seleccionar</option>
-              <option value="Tecnicatura superior en desarrollo de software">Tecnicatura superior en desarrollo de software</option>
-            </select> 
+            <?php
+              // Aca se traen los nombres de las carreras de la tabla carrera para insertarlos en el select "plan de carrera".
+              $sql = "SELECT nombre_carrera FROM carrera";
+              $result = $conn->query($sql);
+
+              if ($result->num_rows > 0) {
+                  echo '<label class="form-label text-black-50" for="plan_carrera">Plan de Carrera *</label>';
+                  echo '<select class="form-control select" id="plan_carrera" name="plan_carrera" required>';
+                  echo '<option hidden>Seleccionar</option>';
+                    while($row = $result->fetch_assoc()) {
+                        echo '<option value="' . htmlspecialchars($row['nombre_carrera']) . '">' . htmlspecialchars($row['nombre_carrera']) . '</option>';
+                        // Aca se generan las opciones (carreras) traidas desde la tabla "carrera".
+                    }
+                  echo '</select>';
+              }
+              else {
+                echo "No se encontraron carreras.";
+              }
+            ?>
           </div>
           <div class="columna">
             <label class="form-label text-black-50" for="estado_inscripcion">Estado de Inscripción *</label>
@@ -378,7 +392,8 @@
     }
   </style>
 
-  <script>document.getElementById('repositorio_documentacion').addEventListener('input', function () {
+  <script>
+    document.getElementById('repositorio_documentacion').addEventListener('input', function () {
     const input = this;
     const pattern = /^https:\/\/drive\.google\.com\/.*$/;
 
