@@ -18,6 +18,8 @@
             exit();
         }
 
+        $mensaje = '';
+
         // Procesa la asignación de materias seleccionadas
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['asignar_materia'])) {
@@ -162,8 +164,8 @@
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
-            
-            <?php echo $mensaje=''; ?>
+
+            <?= $mensaje ?>
         </div>
     </main>
     <script>
