@@ -162,9 +162,8 @@
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
             </form>
-
-            <?php echo $mensaje ?>
-
+            
+            <?php echo $mensaje=''; ?>
         </div>
     </main>
     <script>
