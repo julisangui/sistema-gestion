@@ -10,8 +10,9 @@
 </head>
 <body>
     <?php
-        require("conexion.php");
-        include("nuevo-header.php");
+        include "variablesPath.php";
+        require(rutas::$pathConetion);
+        include(rutas::$pathNuevoHeader);
 
         // Función para obtener los datos del estudiante
         function get_student_data($id) {

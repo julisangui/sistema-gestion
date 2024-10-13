@@ -11,7 +11,9 @@
 <body>
 
   <?php
-    include("nuevo-header.php");
+    include "variablesPath.php";
+    require(rutas::$pathConetion);
+    include(rutas::$pathNuevoHeader);
   ?>
 
   <div class="container">
@@ -73,8 +75,7 @@
   </style>
 
   <?php
-    require("conexion.php");
-    
+
     $sql = "SELECT id_estudiante, nro_legajo, tipo_documento, dni_estudiante, nombre, apellido, email, telefono, estado_estudiante, documentacion_completa FROM estudiantes";
 
     if (isset($_GET['enviar'])) { //El if se ejecutara solo si el usuario presiona el boton buscar.

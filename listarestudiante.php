@@ -10,8 +10,9 @@
 </head>
 <body>
     <?php
-        require("conexion.php");
-        include("nuevo-header.php");
+        include "variablesPath.php";
+        require(rutas::$pathConetion);
+        include(rutas::$pathNuevoHeader);
 
         // Función para obtener los datos del estudiante
         function get_student_data($id) {
@@ -38,66 +39,47 @@
 
         // Actualizar los datos del estudiante
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $id_estudiante = $_POST['id_estudiante'];
-        $nombre = $_POST['nombre'];
-        $apellido = $_POST['apellido'];
-        $email = $_POST['email'];
-        $telefono = $_POST['telefono'];
-        $tipo_documento = $_POST['tipo_documento'];
-        $dni_estudiante = $_POST['dni_estudiante'];
-        $nro_legajo = $_POST['nro_legajo'];
-        $genero = $_POST['genero'];
-        $fecha_nacimiento = $_POST['fecha_nacimiento'];
-        $pais_nacimiento = $_POST['pais_nacimiento'];
-        $lugar_nacimiento = $_POST['lugar_nacimiento'];
-        $familia_a_cargo = $_POST['familia_a_cargo'];
-        $hijos = $_POST['hijos'];
-        $trabaja = $_POST['trabaja'];
-        $pais_dom = $_POST['pais_dom'];
-        $provincia = $_POST['provincia'];
-        $partido = $_POST['partido'];
-        $localidad = $_POST['localidad'];
-        $calle = $_POST['calle'];
-        $numero = $_POST['numero'];
-        $piso = $_POST['piso'];
-        $departamento = $_POST['departamento'];
-        $edificio = $_POST['edificio'];
-        $codigo_postal = $_POST['codigo_postal'];
-        $nombre_escuela = $_POST['nombre_escuela'];
-        $titulo_secundario = $_POST['titulo_secundario'];
-        $anio_de_egreso = $_POST['anio_de_egreso'];
-        $titulo_certificado = $_POST['titulo_certificado'];
-        $titulo_tecnico = $_POST['titulo_tecnico'];
-        $titulo_hab = $_POST['titulo_hab'];
-        $doc_dni = isset($_POST['doc_dni'])  ? 'Sí' : 'No';
-        $doc_medico = isset($_POST['doc_medico'])  ? 'Sí' : 'No';
-        $analitico = isset($_POST['analitico'])  ? 'Sí' : 'No';
-        $doc_nacimiento = isset($_POST['doc_nacimiento']) ? 'Sí' : 'No';
-        $documentacion_completa = $_POST['documentacion_completa'];
-        $repositorio_documentacion = $_POST['repositorio_documentacion'];
-        $plan_carrera = $_POST['plan_carrera'];
-        $estado_inscripcion = $_POST['estado_inscripcion'];
-        $estado_estudiante = $_POST['estado_estudiante'];
-        $observaciones = $_POST['observaciones'];
-
-        $servername = "localhost";
-        $username = "root";
-        $password = "";
-        $dbname = "c1602068_isft225";
-
-        $conn = new mysqli($servername, $username, $password, $dbname);
-
-        if ($conn->connect_error) {
-            die("Conexión fallida: " . $conn->connect_error);
-        }
-
-        if ($conn->query($sql) === TRUE) {
-            echo "";
-        } else {
-            echo "No se pudo realizar la consulta";
-        }
-
-        $conn->close();
+            $id_estudiante = $_POST['id_estudiante'];
+            $nombre = $_POST['nombre'];
+            $apellido = $_POST['apellido'];
+            $email = $_POST['email'];
+            $telefono = $_POST['telefono'];
+            $tipo_documento = $_POST['tipo_documento'];
+            $dni_estudiante = $_POST['dni_estudiante'];
+            $nro_legajo = $_POST['nro_legajo'];
+            $genero = $_POST['genero'];
+            $fecha_nacimiento = $_POST['fecha_nacimiento'];
+            $pais_nacimiento = $_POST['pais_nacimiento'];
+            $lugar_nacimiento = $_POST['lugar_nacimiento'];
+            $familia_a_cargo = $_POST['familia_a_cargo'];
+            $hijos = $_POST['hijos'];
+            $trabaja = $_POST['trabaja'];
+            $pais_dom = $_POST['pais_dom'];
+            $provincia = $_POST['provincia'];
+            $partido = $_POST['partido'];
+            $localidad = $_POST['localidad'];
+            $calle = $_POST['calle'];
+            $numero = $_POST['numero'];
+            $piso = $_POST['piso'];
+            $departamento = $_POST['departamento'];
+            $edificio = $_POST['edificio'];
+            $codigo_postal = $_POST['codigo_postal'];
+            $nombre_escuela = $_POST['nombre_escuela'];
+            $titulo_secundario = $_POST['titulo_secundario'];
+            $anio_de_egreso = $_POST['anio_de_egreso'];
+            $titulo_certificado = $_POST['titulo_certificado'];
+            $titulo_tecnico = $_POST['titulo_tecnico'];
+            $titulo_hab = $_POST['titulo_hab'];
+            $doc_dni = isset($_POST['doc_dni'])  ? 'Sí' : 'No';
+            $doc_medico = isset($_POST['doc_medico'])  ? 'Sí' : 'No';
+            $analitico = isset($_POST['analitico'])  ? 'Sí' : 'No';
+            $doc_nacimiento = isset($_POST['doc_nacimiento']) ? 'Sí' : 'No';
+            $documentacion_completa = $_POST['documentacion_completa'];
+            $repositorio_documentacion = $_POST['repositorio_documentacion'];
+            $plan_carrera = $_POST['plan_carrera'];
+            $estado_inscripcion = $_POST['estado_inscripcion'];
+            $estado_estudiante = $_POST['estado_estudiante'];
+            $observaciones = $_POST['observaciones'];
         }
 
         // Obtener datos del estudiante para precargar en el formulario

@@ -8,7 +8,9 @@
 </head>
 <body>
     <?php
-        require("conexion.php");
+        include "variablesPath.php";
+        require(rutas::$pathConetion);
+        include(rutas::$pathNuevoHeader);
 
         // Verifica si se ha pasado el ID de estudiante
         if (isset($_GET['id_estudiante'])) {

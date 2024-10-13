@@ -11,9 +11,10 @@
 </head>
 <body>
   <?php
-
-    require("conexion.php");
-    include("nuevo-header.php");
+      
+      include "variablesPath.php";
+      require(rutas::$pathConetion);
+      include(rutas::$pathNuevoHeader);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
       $nombre = $_POST['nombre'];
