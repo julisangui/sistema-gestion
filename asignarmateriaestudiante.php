@@ -10,7 +10,6 @@
     <?php
         include "variablesPath.php";
         require(rutas::$pathConetion);
-        include(rutas::$pathNuevoHeader);
 
         // Verifica si se ha pasado el ID de estudiante
         if (isset($_GET['id_estudiante'])) {
@@ -82,8 +81,8 @@
             exit();
         }
 
-        // Incluir el header
-        include('nuevo-header.php');
+        include(rutas::$pathNuevoHeader);
+
     ?>
 
     <style>
