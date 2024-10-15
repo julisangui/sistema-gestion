@@ -25,33 +25,43 @@
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['asignar_materia'])) {
                 $materias_seleccionadas = $_POST['asignar_materia'];
-                
-                // Inserta las materias seleccionadas en la tabla estudiante_materia
-                $sql_insert = "INSERT INTO estudiante_materia (id_estudiante, id_materia) VALUES (?, ?)";
+                $id_carrera = $_POST['id_carrera'];
+
+                // Inserta las materias seleccionadas en la tabla cursada
+                $sql_insert = "INSERT INTO cursada (id_estudiante, id_materia, id_carrera) VALUES (?, ?, ?)";
                 $stmt_insert = $conn->prepare($sql_insert);
 
                 foreach ($materias_seleccionadas as $id_materia) {
-                    $stmt_insert->bind_param("ii", $id_estudiante, $id_materia);
-                    $stmt_insert->execute();
+                    // Obtener id_carrera de la materia
+                    $sql_carrera = "SELECT id_carrera FROM materia WHERE id_materia = ?";
+                    $stmt_carrera = $conn->prepare($sql_carrera);
+                    $stmt_carrera->bind_param("i", $id_materia);
+                    $stmt_carrera->execute();
+                    $result_carrera = $stmt_carrera->get_result();
+
+                    if ($result_carrera->num_rows > 0) {
+                        $fila_carrera = $result_carrera->fetch_assoc();
+                        $id_carrera_materia = $fila_carrera['id_carrera'];
+
+                        $stmt_insert->bind_param("iii", $id_estudiante, $id_materia, $id_carrera_materia);
+                        if (!$stmt_insert->execute()) {
+                            $mensaje = "<div class='alert alert-danger text-center'>
+                                            <h4 class='alert-heading'>¡Error al asignar las materias!</h4>
+                                            <p>Hubo un problema al asignar las materias: " . $stmt_insert->error . "</p>
+                                        </div>";
+                        }
+                    }
+
+                    $stmt_carrera->close();
                 }
 
                 $stmt_insert->close();
-                $mensaje = "<div class='container mt-4 style= 'Margin: 0 auto';'>
-                                    <div class='alert alert-success text-center' style='max-width: 95%;'>
-                                        <h4 class='alert-heading'>¡Materias asignadas correctamente!</h4>
-                                        <hr>
-                                        <p>El registro se ha guardado exitosamente en la base de datos.</p>
-                                    </div>
+                if (empty($mensaje)) {
+                    $mensaje = "<div class='alert alert-success text-center'>
+                                    <h4 class='alert-heading'>¡Materias asignadas correctamente!</h4>
+                                    <p>El registro se ha guardado exitosamente en la base de datos.</p>
                                 </div>";
-            }
-            else {
-                $mensaje = "<div class='container mt-4 style= 'Margin: 0 auto';'>
-                                <div class='alert alert-danger text-center' style='max-width: 95%;'>
-                                    <h4 class='alert-heading'>¡Error al asignar las materias!</h4>
-                                    <hr>
-                                    <p>Hubo un problema al asignar las materias: " . $conn->error . "</p>
-                                </div>
-                            </div>";
+                }
             }
         }
 
@@ -82,7 +92,6 @@
         }
 
         include(rutas::$pathNuevoHeader);
-
     ?>
 
     <style>
@@ -161,6 +170,7 @@
                         <!-- Aquí se cargan las materias según su respectivo año -->
                     </div>
                 </div>
+                <input type="hidden" name="id_carrera" value="<?= $fila['plan_carrera'] ?? '' ?>"> <!-- Asegúrate de tener el id_carrera -->
                 <div class="col-md-12 mt-2">
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </div>
