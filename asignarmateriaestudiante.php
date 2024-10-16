@@ -110,7 +110,7 @@
         if ($result_sql->num_rows > 0) {
             $fila = $result_sql->fetch_assoc();     
 
-            // Obtener el id_carrera basado en el plan_carrera
+            // Obtener el id_carrera segun el plan_carrera
             $sql_id_carrera = "SELECT id_carrera FROM carrera WHERE nombre_carrera = ?";
             $stmt_id_carrera = $conn->prepare($sql_id_carrera);
             $stmt_id_carrera->bind_param("s", $fila['plan_carrera']);
@@ -172,13 +172,7 @@
                 <tbody>                    
                     
                     <?php
-                    // Trae los datos del estudiante
-                        $sql_estudiante = "SELECT dni_estudiante, nro_legajo, nombre, apellido, plan_carrera FROM estudiantes WHERE id_estudiante = ?";
-                        $stmt_estudiante = $conn->prepare($sql_estudiante);
-                        $stmt_estudiante->bind_param("i", $id_estudiante);
-                        $stmt_estudiante->execute();
-                        $result_sql = $stmt_estudiante->get_result();
-                                            
+                    // Trae los datos del estudiante                                           
                         if ($result_sql->num_rows > 0) {
                             $fila = $result_sql->fetch_assoc();     
                             echo "<tr>";
@@ -255,7 +249,7 @@
             <div class="columna">
                 <label class="form-label text-black-50 mt-3">Asignar materia:</label>
                 <div id="materias">
-                    <!-- Aquí se cargan las materias según su respectivo año -->
+                    <!-- Aca se cargan las materias según su respectivo año -->
                 </div>
             </div>
 
