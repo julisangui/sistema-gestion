@@ -39,71 +39,69 @@
 
         // Actualizar los datos del estudiante
         if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $id_estudiante = $_POST['id_estudiante'];
-        $nombre = $_POST['nombre'];
-        $apellido = $_POST['apellido'];
-        $email = $_POST['email'];
-        $telefono = $_POST['telefono'];
-        $tipo_documento = $_POST['tipo_documento'];
-        $dni_estudiante = $_POST['dni_estudiante'];
-        $nro_legajo = $_POST['nro_legajo'];
-        $genero = $_POST['genero'];
-        $fecha_nacimiento = $_POST['fecha_nacimiento'];
-        $pais_nacimiento = $_POST['pais_nacimiento'];
-        $lugar_nacimiento = $_POST['lugar_nacimiento'];
-        $familia_a_cargo = $_POST['familia_a_cargo'];
-        $hijos = $_POST['hijos'];
-        $trabaja = $_POST['trabaja'];
-        $pais_dom = $_POST['pais_dom'];
-        $provincia = $_POST['provincia'];
-        $partido = $_POST['partido'];
-        $localidad = $_POST['localidad'];
-        $calle = $_POST['calle'];
-        $numero = $_POST['numero'];
-        $piso = $_POST['piso'];
-        $departamento = $_POST['departamento'];
-        $edificio = $_POST['edificio'];
-        $codigo_postal = $_POST['codigo_postal'];
-        $nombre_escuela = $_POST['nombre_escuela'];
-        $titulo_secundario = $_POST['titulo_secundario'];
-        $anio_de_egreso = $_POST['anio_de_egreso'];
-        $titulo_certificado = $_POST['titulo_certificado'];
-        $titulo_tecnico = $_POST['titulo_tecnico'];
-        $titulo_hab = $_POST['titulo_hab'];
-        $doc_dni = isset($_POST['doc_dni']) ? 'Sí' : 'No';
-        $doc_medico = isset($_POST['doc_medico']) ? 'Sí' : 'No';
-        $analitico = isset($_POST['analitico']) ? 'Sí' : 'No';
-        $doc_nacimiento = isset($_POST['doc_nacimiento']) ? 'Sí' : 'No';
-        $documentacion_completa = $_POST['documentacion_completa'];
-        $repositorio_documentacion = $_POST['repositorio_documentacion'];
-        $plan_carrera = $_POST['plan_carrera'];
-        $estado_inscripcion = $_POST['estado_inscripcion'];
-        $estado_estudiante = $_POST['estado_estudiante'];
-        $observaciones = $_POST['observaciones'];
+            $id_estudiante = $_POST['id_estudiante'];
+            $nombre = $_POST['nombre'];
+            $apellido = $_POST['apellido'];
+            $email = $_POST['email'];
+            $telefono = $_POST['telefono'];
+            $tipo_documento = $_POST['tipo_documento'];
+            $dni_estudiante = $_POST['dni_estudiante'];
+            $nro_legajo = $_POST['nro_legajo'];
+            $genero = $_POST['genero'];
+            $fecha_nacimiento = $_POST['fecha_nacimiento'];
+            $pais_nacimiento = $_POST['pais_nacimiento'];
+            $lugar_nacimiento = $_POST['lugar_nacimiento'];
+            $familia_a_cargo = $_POST['familia_a_cargo'];
+            $hijos = $_POST['hijos'];
+            $trabaja = $_POST['trabaja'];
+            $pais_dom = $_POST['pais_dom'];
+            $provincia = $_POST['provincia'];
+            $partido = $_POST['partido'];
+            $localidad = $_POST['localidad'];
+            $calle = $_POST['calle'];
+            $numero = $_POST['numero'];
+            $piso = $_POST['piso'];
+            $departamento = $_POST['departamento'];
+            $edificio = $_POST['edificio'];
+            $codigo_postal = $_POST['codigo_postal'];
+            $nombre_escuela = $_POST['nombre_escuela'];
+            $titulo_secundario = $_POST['titulo_secundario'];
+            $anio_de_egreso = $_POST['anio_de_egreso'];
+            $titulo_certificado = $_POST['titulo_certificado'];
+            $titulo_tecnico = $_POST['titulo_tecnico'];
+            $titulo_hab = $_POST['titulo_hab'];
+            $doc_dni = isset($_POST['doc_dni']) ? 'Sí' : 'No';
+            $doc_medico = isset($_POST['doc_medico']) ? 'Sí' : 'No';
+            $analitico = isset($_POST['analitico']) ? 'Sí' : 'No';
+            $doc_nacimiento = isset($_POST['doc_nacimiento']) ? 'Sí' : 'No';
+            $documentacion_completa = $_POST['documentacion_completa'];
+            $repositorio_documentacion = $_POST['repositorio_documentacion'];
+            $plan_carrera = $_POST['plan_carrera'];
+            $estado_inscripcion = $_POST['estado_inscripcion'];
+            $estado_estudiante = $_POST['estado_estudiante'];
+            $observaciones = $_POST['observaciones'];
 
-        $sql = "UPDATE estudiantes SET nro_legajo='$nro_legajo', tipo_documento='$tipo_documento', dni_estudiante='$dni_estudiante', nombre='$nombre', apellido='$apellido', email='$email', telefono='$telefono', genero='$genero', fecha_nacimiento='$fecha_nacimiento', pais_nacimiento='$pais_nacimiento', lugar_nacimiento='$lugar_nacimiento', familia_a_cargo='$familia_a_cargo', hijos='$hijos', trabaja='$trabaja', pais_dom='$pais_dom', provincia='$provincia', calle='$calle', numero='$numero', piso='$piso', departamento='$departamento', edificio='$edificio', localidad='$localidad', partido='$partido', codigo_postal='$codigo_postal', nombre_escuela='$nombre_escuela', titulo_secundario='$titulo_secundario', anio_de_egreso='$anio_de_egreso', titulo_certificado='$titulo_certificado', titulo_tecnico='$titulo_tecnico', titulo_hab='$titulo_hab', doc_dni='$doc_dni', doc_medico='$doc_medico', analitico='$analitico', doc_nacimiento='$doc_nacimiento', documentacion_completa='$documentacion_completa', repositorio_documentacion='$repositorio_documentacion', plan_carrera='$plan_carrera', estado_inscripcion='$estado_inscripcion', estado_estudiante='$estado_estudiante', observaciones='$observaciones' WHERE id_estudiante='$id_estudiante'";
+            $sql = "UPDATE estudiantes SET nro_legajo='$nro_legajo', tipo_documento='$tipo_documento', dni_estudiante='$dni_estudiante', nombre='$nombre', apellido='$apellido', email='$email', telefono='$telefono', genero='$genero', fecha_nacimiento='$fecha_nacimiento', pais_nacimiento='$pais_nacimiento', lugar_nacimiento='$lugar_nacimiento', familia_a_cargo='$familia_a_cargo', hijos='$hijos', trabaja='$trabaja', pais_dom='$pais_dom', provincia='$provincia', calle='$calle', numero='$numero', piso='$piso', departamento='$departamento', edificio='$edificio', localidad='$localidad', partido='$partido', codigo_postal='$codigo_postal', nombre_escuela='$nombre_escuela', titulo_secundario='$titulo_secundario', anio_de_egreso='$anio_de_egreso', titulo_certificado='$titulo_certificado', titulo_tecnico='$titulo_tecnico', titulo_hab='$titulo_hab', doc_dni='$doc_dni', doc_medico='$doc_medico', analitico='$analitico', doc_nacimiento='$doc_nacimiento', documentacion_completa='$documentacion_completa', repositorio_documentacion='$repositorio_documentacion', plan_carrera='$plan_carrera', estado_inscripcion='$estado_inscripcion', estado_estudiante='$estado_estudiante', observaciones='$observaciones' WHERE id_estudiante='$id_estudiante'";
 
-        if ($conn->query($sql) === TRUE) {
-            echo "
-            <div class='container mt-4 style= 'Margin: 0 auto';'>
-                <div class='alert alert-success text-center' style='max-width: 95%;'>
-                    <h4 class='alert-heading'>¡Datos actualizados correctamente!</h4>
-                    <p>El registro se ha actualizado exitosamente en la base de datos.</p>
-                    <hr>
-                    <a href='tablaestudiantes.php' class='btn btn-primary'>Ver lista de estudiantes</a>
-                </div>
-            </div>";
-        } else {
-            echo "
-            <div class='container mt-4 style= 'Margin: 0 auto';'>
-                <div class='alert alert-danger text-center' style='max-width: 95%;'>
-                    <h4 class='alert-heading'>Error al actualizar el registro</h4>
-                    <p>Hubo un problema al guardar los datos: " . $conn->error . "</p>
-                </div>
-            </div>";
-        }
-
-        $conn->close();
+            if ($conn->query($sql) === TRUE) {
+                echo "
+                <div class='container mt-4 style= 'Margin: 0 auto';'>
+                    <div class='alert alert-success text-center' style='max-width: 95%;'>
+                        <h4 class='alert-heading'>¡Datos actualizados correctamente!</h4>
+                        <p>El registro se ha actualizado exitosamente en la base de datos.</p>
+                        <hr>
+                        <a href='tablaestudiantes.php' class='btn btn-primary'>Volver a la lista de estudiantes</a>
+                    </div>
+                </div>";
+            } else {
+                echo "
+                <div class='container mt-4 style= 'Margin: 0 auto';'>
+                    <div class='alert alert-danger text-center' style='max-width: 95%;'>
+                        <h4 class='alert-heading'>Error al actualizar el registro</h4>
+                        <p>Hubo un problema al guardar los datos: " . $conn->error . "</p>
+                    </div>
+                </div>";
+            }
         }
 
         // Obtener datos del estudiante para precargar en el formulario
@@ -374,6 +372,8 @@
                             else {
                                 echo "No se encontraron carreras.";
                             }
+
+                            $conn->close();
                         ?>
                     </div>
                     <div class="columna">
