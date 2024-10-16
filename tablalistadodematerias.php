@@ -18,7 +18,7 @@ require(rutas::$pathConetion);
 $searchTerm = isset($_GET['q']) ? $_GET['q'] : '';
 $filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
 
-$sql = "SELECT id_materia, cod_num, cod_alpha, denominacion_materia, tipo_aprobacion, nota_min_aprobacion, trayecto, correlatividades, estado_materia, ciclo_lectivo, campo_formativo, carga_horaria_materia 
+$sql = "SELECT id_materia, cod_num, cod_alpha, denominacion_materia, tipo_aprobacion, nota_min_aprobacion, trayecto, correlatividades, estado_materia, ciclo_electivo, campo_formativo, carga_horaria_materia 
         FROM materia ";
 
 if ($filter !== 'all') {

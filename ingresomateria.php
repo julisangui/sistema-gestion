@@ -20,7 +20,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $trayecto_n = $_POST['trayecto'];
     $correlatividades_n = $_POST['correlatividades']; 
     $estado_materia_n = $_POST['estado_materia'];
-    $ciclo_lectivo_n = $_POST['ciclo_lectivo'];
+    $ciclo_electivo_n = $_POST['ciclo_electivo'];
     $campo_formativo_n = $_POST['campo_formativo'];
     $cod_num = $_POST['cod_num'];
     $nota_min_aprobacion = $_POST['nota_min_aprobacion'];
@@ -33,7 +33,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $trayecto = htmlspecialchars($trayecto_n, ENT_QUOTES, 'UTF-8');
     $correlatividades = htmlspecialchars($correlatividades_n, ENT_QUOTES, 'UTF-8');
     $estado_materia = htmlspecialchars($estado_materia_n, ENT_QUOTES, 'UTF-8');
-    $ciclo_lectivo = htmlspecialchars($ciclo_lectivo_n, ENT_QUOTES, 'UTF-8');
+    $ciclo_electivo = htmlspecialchars($ciclo_electivo_n, ENT_QUOTES, 'UTF-8');
     
     $sql = "INSERT INTO materia (
         cod_num,
@@ -44,7 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         trayecto,
         correlatividades,
         estado_materia,
-        ciclo_lectivo,
+        ciclo_electivo,
         campo_formativo,
         carga_horaria_materia
     ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
@@ -61,7 +61,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $trayecto,
         $correlatividades,
         $estado_materia,
-        $ciclo_lectivo,
+        $ciclo_electivo,
         $campo_formativo,
         $carga_horaria_materia
     );
@@ -164,8 +164,8 @@ include 'headernosearch.php';
 
 
                         <div class="col-md-4 position-relative">
-                            <label class="form-label text-black-50" for="ciclo_lectivo">Ciclo Lectivo*:</label>
-                            <input class="form-control" type="text" name="ciclo_lectivo" id="ciclo_lectivo" required>
+                            <label class="form-label text-black-50" for="ciclo_electivo">Ciclo electivo*:</label>
+                            <input class="form-control" type="text" name="ciclo_electivo" id="ciclo_electivo" required>
                         </div>
 
 

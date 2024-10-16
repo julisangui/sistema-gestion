@@ -32,7 +32,7 @@ $id_materia = $_GET['id_materia'];
         $new_trayecto = $_POST['trayecto'];
         $new_correlatividades = $_POST['correlatividades'];
         $new_estado_materia = $_POST['estado_materia'];
-        $new_ciclo_lectivo = $_POST['ciclo_lectivo'];
+        $new_ciclo_electivo = $_POST['ciclo_electivo'];
         $new_campo_formativo = $_POST['campo_formativo'];
         $new_carga_horaria_materia = $_POST['carga_horaria_materia'];
     
@@ -46,7 +46,7 @@ $id_materia = $_GET['id_materia'];
                     trayecto = ?, 
                     correlatividades = ?, 
                     estado_materia = ?,
-                    ciclo_lectivo= ?,
+                    ciclo_electivo= ?,
                     campo_formativo = ?,
                     carga_horaria_materia = ?
                 WHERE id_materia = ?";
@@ -67,7 +67,7 @@ $id_materia = $_GET['id_materia'];
             $new_trayecto,
             $new_correlatividades,
             $new_estado_materia,
-            $new_ciclo_lectivo,
+            $new_ciclo_electivo,
             $new_campo_formativo,
             $new_carga_horaria_materia,
             $id_materia
@@ -97,7 +97,7 @@ if ($conn->connect_error) {
     die("La conexión falló: " . $conn->connect_error);
 }
 
-$sql = "SELECT id_materia, cod_num, cod_alpha, denominacion_materia, tipo_aprobacion, nota_min_aprobacion, trayecto, correlatividades, estado_materia, ciclo_lectivo, campo_formativo, carga_horaria_materia 
+$sql = "SELECT id_materia, cod_num, cod_alpha, denominacion_materia, tipo_aprobacion, nota_min_aprobacion, trayecto, correlatividades, estado_materia, ciclo_electivo, campo_formativo, carga_horaria_materia 
         FROM materia
         WHERE id_materia=$id_materia";
 
@@ -204,8 +204,8 @@ include "headernosearch.php";
 
 
                             <div class="col-md-3 position-relative">
-                                <label class="form-label text-black-50" for="ciclo_lectivo">Ciclo lectivo*:</label>
-                                <input class="form-control" type="text" name="ciclo_lectivo" id="ciclo_lectivo" value="<?= $row['ciclo_lectivo'] ?>">
+                                <label class="form-label text-black-50" for="ciclo_electivo">Ciclo electivo*:</label>
+                                <input class="form-control" type="text" name="ciclo_electivo" id="ciclo_electivo" value="<?= $row['ciclo_electivo'] ?>">
                             </div>
 
 
