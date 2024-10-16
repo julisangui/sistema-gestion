@@ -26,33 +26,24 @@
             if (isset($_POST['asignar_materia'])) {
                 $materias_seleccionadas = $_POST['asignar_materia'];
                 $id_carrera = $_POST['id_carrera'];
+                $id_ciclo_electivo = $_POST['id_ciclo_electivo'];
+                $estado_inscripcion = $_POST['estado_inscripcion'];
+                $estado_materia = $_POST['estado_materia'];
+                $horario_cursada = $_POST['horario_cursada'];
+                $fecha_estado_materia = $_POST['fecha_estado_materia'];
 
                 // Inserta las materias seleccionadas en la tabla cursada
-                $sql_insert = "INSERT INTO cursada (id_estudiante, id_materia, id_carrera) VALUES (?, ?, ?)";
+                $sql_insert = "INSERT INTO cursada (id_estudiante, id_ciclo_electivo, estado_inscripcion, estado_materia, horario_cursada, id_materia, id_carrera, fecha_estado_materia) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 $stmt_insert = $conn->prepare($sql_insert);
 
                 foreach ($materias_seleccionadas as $id_materia) {
-                    // Obtener id_carrera de la materia
-                    $sql_carrera = "SELECT id_carrera FROM materia WHERE id_materia = ?";
-                    $stmt_carrera = $conn->prepare($sql_carrera);
-                    $stmt_carrera->bind_param("i", $id_materia);
-                    $stmt_carrera->execute();
-                    $result_carrera = $stmt_carrera->get_result();
-
-                    if ($result_carrera->num_rows > 0) {
-                        $fila_carrera = $result_carrera->fetch_assoc();
-                        $id_carrera_materia = $fila_carrera['id_carrera'];
-
-                        $stmt_insert->bind_param("iii", $id_estudiante, $id_materia, $id_carrera_materia);
-                        if (!$stmt_insert->execute()) {
-                            $mensaje = "<div class='alert alert-danger text-center'>
-                                            <h4 class='alert-heading'>¡Error al asignar las materias!</h4>
-                                            <p>Hubo un problema al asignar las materias: " . $stmt_insert->error . "</p>
-                                        </div>";
-                        }
+                    $stmt_insert->bind_param("iissssss", $id_estudiante, $id_ciclo_electivo, $estado_inscripcion, $estado_materia, $horario_cursada, $id_materia, $id_carrera, $fecha_estado_materia);
+                    if (!$stmt_insert->execute()) {
+                        $mensaje = "<div class='alert alert-danger text-center'>
+                                        <h4 class='alert-heading'>¡Error al asignar las materias!</h4>
+                                        <p>Hubo un problema al asignar las materias: " . $stmt_insert->error . "</p>
+                                    </div>";
                     }
-
-                    $stmt_carrera->close();
                 }
 
                 $stmt_insert->close();
@@ -65,31 +56,11 @@
             }
         }
 
-        // A través del select se traen las materias del año seleccionado
-        if (isset($_GET['anio_carrera'])) {
-            $anio_carrera = $_GET['anio_carrera'];
-
-            // Consulta para obtener las materias según el año
-            $sql_materias = "SELECT id_materia, denominacion_materia FROM materia WHERE anio_carrera = ?";
-            $stmt_materias = $conn->prepare($sql_materias);
-            $stmt_materias->bind_param("i", $anio_carrera);
-            $stmt_materias->execute();
-            $result_materias = $stmt_materias->get_result();
-
-            if ($result_materias->num_rows > 0) {
-                while ($rowm = $result_materias->fetch_assoc()) {
-                    echo '<div class="form-check">';
-                    echo '<input class="form-check-input" type="checkbox" name="asignar_materia[]" value="' . $rowm['id_materia'] . '" id="materia' . $rowm['id_materia'] . '">';
-                    echo '<label class="form-check-label" for="materia' . $rowm['id_materia'] . '">' . $rowm['denominacion_materia'] . '</label>';
-                    echo '</div>';
-                }
-            } else {
-                echo '<p>No hay materias disponibles para el año seleccionado.</p>';
-            }
-
-            $stmt_materias->close();
-            exit();
-        }
+        // Obtener ciclos electivos disponibles
+        $sql_ciclos = "SELECT id_ciclo_electivo, nombre_ciclo FROM ciclo_electivo";
+        $stmt_ciclos = $conn->prepare($sql_ciclos);
+        $stmt_ciclos->execute();
+        $result_ciclos = $stmt_ciclos->get_result();
 
         include(rutas::$pathNuevoHeader);
     ?>
@@ -116,6 +87,7 @@
             background-color: #2ca0dd;
         }
     </style>
+    
     <main>
         <div class="container d-block p-3 m-4 h-100">
             <h4>Datos del estudiante</h4>
@@ -157,8 +129,45 @@
                         </tbody>
                     </table>
                 </div>
+                
+                <div class="col-md-5">
+                    <label class="form-label text-black-50">Seleccionar Ciclo electivo:</label>
+                    <select id="id_ciclo_electivo" name="id_ciclo_electivo" class="form-select" required>
+                        <option hidden>Seleccione un ciclo electivo</option>
+                        <?php while ($row = $result_ciclos->fetch_assoc()): ?>
+                            <option value="<?= $row['id_ciclo_electivo'] ?>"><?= $row['nombre_ciclo'] ?></option>
+                        <?php endwhile; ?>
+                    </select>
+
+                    <label class="form-label text-black-50 mt-3">Estado de Inscripción:</label>
+                    <select name="estado_inscripcion" class="form-select" required>
+                        <option value="completo">Completo</option>
+                        <option value="en curso">En curso</option>
+                        <option value="incompleto">Incompleto</option>
+                    </select>
+
+                    <label class="form-label text-black-50 mt-3">Estado de Materia:</label>
+                    <select name="estado_materia" class="form-select" required>
+                        <option value="aprobada">Aprobada</option>
+                        <option value="reprobada">Reprobada</option>
+                        <option value="cursando">Cursando</option>
+                        <option value="libre">Libre</option>
+                    </select>
+
+                    <label class="form-label text-black-50 mt-3">Horario de Cursada:</label>
+                    <select name="horario_cursada" class="form-select" required>
+                        <option value="08:00-10:00">08:00 - 10:00</option>
+                        <option value="10:00-12:00">10:00 - 12:00</option>
+                        <option value="14:00-16:00">14:00 - 16:00</option>
+                        <option value="16:00-18:00">16:00 - 18:00</option>
+                    </select>
+
+                    <label class="form-label text-black-50 mt-3">Fecha del Estado de Materia:</label>
+                    <input type="date" name="fecha_estado_materia" class="form-control" required>
+                </div>
+
                 <div class="col-md-5">      
-                    <label class="form-label text-black-50">Seleccionar Año:</label>
+                    <label class="form-label text-black-50 mt-3">Seleccionar Año:</label>
                     <select id="anio_carrera" name="anio_carrera" class="form-select" onchange="cargarMaterias()">
                         <option hidden>Seleccione un año</option>
                         <option value="1">Año 1</option>

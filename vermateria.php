@@ -40,7 +40,7 @@ nota_min_aprobacion,
 trayecto,
 correlatividades,
 estado_materia,
-ciclo_lectivo,
+ciclo_electivo,
 campo_formativo,
 carga_horaria_materia
         
@@ -135,8 +135,8 @@ include "headernosearch.php";
                         
 
                         <div class="col-md-3 position-relative">
-                            <label class="form-label text-black-50" for="ciclo_lectivo">Ciclo Lectivo</label>
-                            <input class="form-control" type="text" name="ciclo_lectivo" id="ciclo_lectivo" value="<?= $row['ciclo_lectivo'] ?>"readonly>
+                            <label class="form-label text-black-50" for="ciclo_electivo">Ciclo electivo</label>
+                            <input class="form-control" type="text" name="ciclo_electivo" id="ciclo_electivo" value="<?= $row['ciclo_electivo'] ?>"readonly>
                         </div>
 
 
