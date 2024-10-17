@@ -13,7 +13,7 @@
         include "variablesPath.php";
         require(rutas::$pathConection);
 
-        // Verifica si se ha pasado el ID de estudiante
+        // Verifica si se ha pasado el ID de estudiante.
         if (isset($_GET['id_estudiante'])) {
             $id_estudiante = $_GET['id_estudiante'];
         } else {
@@ -21,12 +21,69 @@
             exit();
         }
 
-        $mensaje = '';
+        $mensaje = ''; // Se define la variable "mensaje".
 
-        // Procesa la asignación de materias al estudiante
+        // Obtener ciclos electivos disponibles.
+        $sql_ciclos = "SELECT id_ciclo_electivo, nombre_ciclo FROM ciclo_electivo";
+        $stmt_ciclos = $conn->prepare($sql_ciclos);
+        $stmt_ciclos->execute();
+        $result_ciclos = $stmt_ciclos->get_result();
+
+        // Trae el plan_carrera del estudiante estudiante seleccionado para saber a que carrera pertenece y transformarlo en su ID.
+        $sql_estudiante = "SELECT plan_carrera FROM estudiantes WHERE id_estudiante = ?";
+        $stmt_estudiante = $conn->prepare($sql_estudiante);
+        $stmt_estudiante->bind_param("i", $id_estudiante);
+        $stmt_estudiante->execute();
+        $result_sql = $stmt_estudiante->get_result();
+
+        if ($result_sql->num_rows > 0) {
+            $fila = $result_sql->fetch_assoc();     
+
+            // Obtener el id_carrera segun el plan_carrera.
+            $sql_id_carrera = "SELECT id_carrera FROM carrera WHERE nombre_carrera = ?";
+            $stmt_id_carrera = $conn->prepare($sql_id_carrera);
+            $stmt_id_carrera->bind_param("s", $fila['plan_carrera']);
+            $stmt_id_carrera->execute();
+            $result_id_carrera = $stmt_id_carrera->get_result();
+
+            if ($result_id_carrera->num_rows > 0) {
+                $fila_id_carrera = $result_id_carrera->fetch_assoc();
+                $id_carrera = $fila_id_carrera['id_carrera'];
+            } else {
+                echo "<h5 style='color: #CA2E2E;'>ID de carrera no encontrado.</h5>";
+                exit();
+            }
+        } else {
+            echo "<tr><td colspan='5'>No se encontraron datos para este estudiante.</td></tr>";
+        }
+
+        // Obtener las materias según el año seleccionado en el select.
+            if (isset($_GET['anio_carrera'])) {
+            $anio_carrera = $_GET['anio_carrera'];
+            
+            $sql_materias = "SELECT id_materia, denominacion_materia FROM materia WHERE anio_carrera = ?";
+            $stmt_materias = $conn->prepare($sql_materias);
+            $stmt_materias->bind_param("i", $anio_carrera);
+            $stmt_materias->execute();
+            $result_materias = $stmt_materias->get_result();
+            
+            if ($result_materias->num_rows > 0) {
+                while ($rowm = $result_materias->fetch_assoc()) {
+                    echo '<div class="form-check">';
+                    echo '<input class="form-check-input" type="checkbox" name="asignar_materia[]" value="' . $rowm['id_materia'] . '" id="materia' . $rowm['id_materia'] . '">';
+                    echo '<label class="form-check-label" for="materia' . $rowm['id_materia'] . '">' . $rowm['denominacion_materia'] . '</label>';
+                    echo '</div>';
+
+                }
+            }
+            
+            $stmt_materias->close();
+            exit();
+        }
+
+        // Ingresa los datos del formulario para la tabla cursada.
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['asignar_materia'])) {
-                // Recibe las materias seleccionadas como array
                 $materias_seleccionadas = $_POST['asignar_materia'];
                 $id_carrera = $_POST['id_carrera'];
                 $id_ciclo_electivo = $_POST['id_ciclo_electivo'];
@@ -35,18 +92,18 @@
                 $horario_cursada = $_POST['horario_cursada'];
                 $fecha_estado_materia = $_POST['fecha_estado_materia'];
 
-                // Inserta las materias seleccionadas en la tabla cursada
+                // Inserta los datos ingresados en el formulario a la tabla cursada.
 
                 $sql_insert = "INSERT INTO cursada (id_estudiante, id_ciclo_electivo, estado_inscripcion, estado_materia, horario_cursada, id_materia, id_carrera, fecha_estado_materia) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
                 $stmt_insert = $conn->prepare($sql_insert);
 
-                // Procesa cada materia seleccionada
+                // Procesa cada materia seleccionada.
                 foreach ($materias_seleccionadas as $id_materia) {
 
-                    $id_materia = (int)$id_materia; // Asegúrate de que es un entero
+                    $id_materia = (int)$id_materia; // Se asegura de que es un entero.
                     $stmt_insert->bind_param("iissssss", $id_estudiante, $id_ciclo_electivo, $estado_inscripcion, $estado_materia, $horario_cursada, $id_materia, $id_carrera, $fecha_estado_materia);
                     
-                    // Ejecuta la consulta
+                    // Ejecuta la consulta.
                     if (!$stmt_insert->execute()) {
                         $mensaje = "<div class='alert alert-danger text-center' style='widht: 100%'>
                                         <h4 class='alert-heading'>¡Error al asignar las materias!</h4>
@@ -68,65 +125,6 @@
                                 </div>";
                 }
             }
-        }
-
-        // A través del select se traen las materias del año seleccionado
-        if (isset($_GET['anio_carrera'])) {
-            $anio_carrera = $_GET['anio_carrera'];
-            
-            // Consulta para obtener las materias según el año
-            $sql_materias = "SELECT id_materia, denominacion_materia FROM materia WHERE anio_carrera = ?";
-            $stmt_materias = $conn->prepare($sql_materias);
-            $stmt_materias->bind_param("i", $anio_carrera);
-            $stmt_materias->execute();
-            $result_materias = $stmt_materias->get_result();
-            
-            if ($result_materias->num_rows > 0) {
-                while ($rowm = $result_materias->fetch_assoc()) {
-                    echo '<div class="form-check">';
-                    echo '<input class="form-check-input" type="checkbox" name="asignar_materia[]" value="' . $rowm['id_materia'] . '" id="materia' . $rowm['id_materia'] . '">';
-                    echo '<label class="form-check-label" for="materia' . $rowm['id_materia'] . '">' . $rowm['denominacion_materia'] . '</label>';
-                    echo '</div>';
-
-                }
-            }
-            
-            $stmt_materias->close();
-            exit();
-        }
-
-        // Obtener ciclos electivos disponibles
-        $sql_ciclos = "SELECT id_ciclo_electivo, nombre_ciclo FROM ciclo_electivo";
-        $stmt_ciclos = $conn->prepare($sql_ciclos);
-        $stmt_ciclos->execute();
-        $result_ciclos = $stmt_ciclos->get_result();
-
-        // Trae los datos del estudiante
-        $sql_estudiante = "SELECT dni_estudiante, nro_legajo, nombre, apellido, plan_carrera FROM estudiantes WHERE id_estudiante = ?";
-        $stmt_estudiante = $conn->prepare($sql_estudiante);
-        $stmt_estudiante->bind_param("i", $id_estudiante);
-        $stmt_estudiante->execute();
-        $result_sql = $stmt_estudiante->get_result();
-
-        if ($result_sql->num_rows > 0) {
-            $fila = $result_sql->fetch_assoc();     
-
-            // Obtener el id_carrera segun el plan_carrera
-            $sql_id_carrera = "SELECT id_carrera FROM carrera WHERE nombre_carrera = ?";
-            $stmt_id_carrera = $conn->prepare($sql_id_carrera);
-            $stmt_id_carrera->bind_param("s", $fila['plan_carrera']);
-            $stmt_id_carrera->execute();
-            $result_id_carrera = $stmt_id_carrera->get_result();
-
-            if ($result_id_carrera->num_rows > 0) {
-                $fila_id_carrera = $result_id_carrera->fetch_assoc();
-                $id_carrera = $fila_id_carrera['id_carrera'];
-            } else {
-                echo "<h5 style='color: #CA2E2E;'>ID de carrera no encontrado.</h5>";
-                exit();
-            }
-        } else {
-            echo "<tr><td colspan='5'>No se encontraron datos para este estudiante.</td></tr>";
         }
 
         include(rutas::$pathNuevoHeader);
