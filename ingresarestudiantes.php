@@ -13,7 +13,7 @@
   <?php
       
       include "variablesPath.php";
-      require(rutas::$pathConetion);
+      require(rutas::$pathConection);
       include(rutas::$pathNuevoHeader);
 
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
@@ -80,9 +80,6 @@
               </div>
           </div>";
       }
-
-      // Cerrar la conexión
-      $conn->close();
     }
   ?>
 
@@ -349,6 +346,8 @@
               else {
                 echo "No se encontraron carreras.";
               }
+
+              $conn->close();
             ?>
           </div>
           <div class="columna">

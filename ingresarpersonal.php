@@ -19,62 +19,73 @@
   // Obtener los datos del formulario
   if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $nombre_personal_n = $_POST['nombre_personal'];
-    $apellido_personal_n = $_POST['apellido_personal'];
-    $email_personal_n = $_POST['email_personal'];
-    $tipodoc_personal_n = $_POST['tipodoc_personal'];
+    // isset función que se utiliza para determinar si una variable está definida y no es null
+    // Capturar el valor del select
+    if (isset($_POST['rol_personal'])) {
+      $rol_personal = $_POST['rol_personal'];
+      $rol_personal = strtoupper($rol_personal);
+      }
+    $nombre_usuario = strtoupper($_POST['nombre_usuario']);
+    $password_usuario = strtoupper($_POST['password_usuario']);
+    $nombre_personal_n = strtoupper($_POST['nombre_personal']);
+    $apellido_personal_n = strtoupper($_POST['apellido_personal']);
+    $email_personal_n = strtoupper($_POST['email_personal']);
+    $tipodoc_personal_n = strtoupper($_POST['tipodoc_personal']);
+    $nrodni_personal_n = strtoupper($_POST['nrodni_personal']);
+    $nrocuil_personal_n = strtoupper($_POST['nrocuil_personal']);
 
-    $nrodni_personal_n = $_POST['nrodni_personal'];
-    $nrocuil_personal_n = $_POST['nrocuil_personal'];
-    $sexo_personal_n = $_POST['sexo_personal'];
-    $fechanac_personal_n = $_POST['fechanac_personal'];
-    $paisnac_personal_n = $_POST['paisnac_personal'];
+    if (isset($_POST['sexo_personal'])) {
+      $sexo_personal = $_POST['sexo_personal'];
+      $sexo_personal = strtoupper($sexo_personal);
+      }
 
-    $lugarnac_personal_n = $_POST['lugarnac_personal'];
-    $fecha_designacion_n = $_POST['fecha_designacion'];
-    $paisdomic_personal_n = $_POST['paisdomic_personal'];
-    $provdomic_personal_n = $_POST['provdomic_personal'];
+    $fechanac_personal_n = strtoupper($_POST['fechanac_personal']);
+    $paisnac_personal_n = strtoupper($_POST['paisnac_personal']);
+    $lugarnac_personal_n = strtoupper($_POST['lugarnac_personal']);
+    $fecha_designacion_n = strtoupper($_POST['fecha_designacion']);
+    $paisdomic_personal_n = strtoupper($_POST['paisdomic_personal']);
+    $provdomic_personal_n = strtoupper($_POST['provdomic_personal']);
+    $calle_personal_n = strtoupper($_POST['calle_personal']);
+    $depto_personal_n = strtoupper($_POST['depto_personal']);
+    $edificio_personal_n = strtoupper($_POST['edificio_personal']);
+    $localidad_personal_n = strtoupper($_POST['localidad_personal']);
+    $partido_personal_n = strtoupper($_POST['partido_personal']);
+    $titulo_n = strtoupper($_POST['titulo']);
+    $titulo_institucion_n = strtoupper($_POST['titulo_institucion']);
+    $tipo_titulo_n = strtoupper($_POST['tipo_titulo']);
+    $carr1_n = strtoupper($_POST['carr1']);
+    $carr1_institucion_n = strtoupper($_POST['carr1_institucion']);
+    $carr1_estado_n = strtoupper($_POST['carr1_estado']);
+    $carr1_titulo_n = strtoupper($_POST['carr1_titulo']);
+    $carr2_n = strtoupper($_POST['carr2']);
+    $carr2_institucion_n = strtoupper($_POST['carr2_institucion']);
+    $carr2_estado_n = strtoupper($_POST['carr2_estado']);
+    $carr2_titulo_n = strtoupper($_POST['carr2_titulo']);
+    $estado_personal_n = strtoupper($_POST['estado_personal']);
+    $telefono_personal = strtoupper($_POST['telefono_personal']);
+    $nro_designacion = strtoupper($_POST['nro_designacion']);
+    $nro_personal = strtoupper($_POST['nro_personal']);
+    $piso_personal = strtoupper($_POST['piso_personal']);
+    $cp_personal = strtoupper($_POST['cp_personal']);
+    $anio_egreso = strtoupper($_POST['anio_egreso']);
+    $carr1_anioegreso = strtoupper($_POST['carr1_anioegreso']);
+    $carr2_anioegreso = strtoupper($_POST['carr2_anioegreso']);
 
-    $calle_personal_n = $_POST['calle_personal'];
-    $depto_personal_n = $_POST['depto_personal'];
-    $edificio_personal_n = $_POST['edificio_personal'];
+    if (isset($_POST['estado_personal'])) {
+      $estado_personal = $_POST['estado_personal'];
+      $estado_personal = strtoupper($estado_personal);
+      }
 
-    $localidad_personal_n = $_POST['localidad_personal'];
-    $partido_personal_n = $_POST['partido_personal'];
-    $titulo_n = $_POST['titulo'];
-    $titulo_institucion_n = $_POST['titulo_institucion'];
-
-
-    $tipo_titulo_n = $_POST['tipo_titulo'];
-    $carr1_n = $_POST['carr1'];
-    $carr1_institucion_n = $_POST['carr1_institucion'];
-    $carr1_estado_n = $_POST['carr1_estado'];
-
-
-    $carr1_titulo_n = $_POST['carr1_titulo'];
-    $carr2_n = $_POST['carr2'];
-    $carr2_institucion_n = $_POST['carr2_institucion'];
-    $carr2_estado_n = $_POST['carr2_estado'];
-
-
-    $carr2_titulo_n = $_POST['carr2_titulo'];
-    $estado_personal_n = $_POST['estado_personal'];
-    $observaciones_n = $_POST['observaciones'];
-
-    $telefono_personal = $_POST['telefono_personal'];
-    $nro_designacion = $_POST['nro_designacion'];
-    $nro_personal = $_POST['nro_personal'];
-    $piso_personal = $_POST['piso_personal'];
-    $cp_personal = $_POST['cp_personal'];
-    $anio_egreso = $_POST['anio_egreso'];
-    $carr1_anioegreso = $_POST['carr1_anioegreso'];
-    $carr2_anioegreso = $_POST['carr2_anioegreso'];
     $DNIchecked = isset($_POST['check_lista']) ? 1 : 0;
     $CUILchecked = isset($_POST['check_cuil']) ? 1 : 0;
     $CVchecked = isset($_POST['check_cv']) ? 1 : 0;
     $TITchecked = isset($_POST['check_tit']) ? 1 : 0;
 
-    // //Evitar inyeccion SQL
+    // //Evitar inyeccion SQL ya que evita XSS al convertir caracteres especiales en entidades HTML.
+    
+    $rol_personal = htmlspecialchars($rol_personal, ENT_QUOTES, 'UTF-8');
+    $nombre_usuario = htmlspecialchars($nombre_usuario, ENT_QUOTES, 'UTF-8');
+    $password_usuario = htmlspecialchars($password_usuario, ENT_QUOTES, 'UTF-8');
     $nombre_personal = htmlspecialchars($nombre_personal_n, ENT_QUOTES, 'UTF-8');
     $apellido_personal = htmlspecialchars($apellido_personal_n, ENT_QUOTES, 'UTF-8');
     $email_personal = htmlspecialchars($email_personal_n, ENT_QUOTES, 'UTF-8');
@@ -112,12 +123,15 @@
     $carr2_titulo = htmlspecialchars($carr2_titulo_n, ENT_QUOTES, 'UTF-8');
 
     $estado_personal = htmlspecialchars($estado_personal_n, ENT_QUOTES, 'UTF-8');
-    $observaciones = htmlspecialchars($observaciones_n, ENT_QUOTES, 'UTF-8');
+   // $observaciones = htmlspecialchars($observaciones_n, ENT_QUOTES, 'UTF-8');
 
 
     //Sentencia SQL para insertar los datos
-  
+    
     $sql = "INSERT INTO personal (
+    rol_personal,
+    nombre_usuario,
+    password_usuario,
     nombre_personal,
     apellido_personal,
     email_personal,
@@ -163,7 +177,7 @@
     carr2_anioegreso,
     carr2_titulo,
     estado_personal,
-    observaciones,
+   /*observaciones,*/
     DNIchecked,
     CUILchecked,
     CVchecked,
@@ -171,21 +185,24 @@
     ) 
    
        VALUES (
-        ?, ?, ?, ?, ?, 
+        ?, ?, ?, ?, ?, ?, ?, ?, 
         ?, ?, ?, ?, ?, 
         ? ,?, ?, ?, ?, 
         ?, ?, ?, ?, ?, 
         ?, ?, ?, ?, ?, 
         ?, ?, ?, ? ,?, 
         ?, ?, ?, ?, ?, 
-        ?, ?, ?, ?, ? ,
+        ?, ?, ?, /*?,*/ ? ,
         ?, ?, ?)";
 
 
     $stmt = $conn->prepare($sql);
 
     $stmt->bind_param(
-      "sssissssssssisssiissssississssissssisssiiii",
+      "ssssssissssssssisssiissssississssissssissiiii", //aca tambien borre la "S" correspondiente a "Observaciones"
+      $rol_personal,
+      $nombre_usuario,
+      $password_usuario,
       $nombre_personal,
       $apellido_personal,
       $email_personal,
@@ -231,7 +248,7 @@
       $carr2_anioegreso,
       $carr2_titulo,
       $estado_personal,
-      $observaciones,
+      /*$observaciones,*/
       $DNIchecked,
       $CUILchecked,
       $CVchecked,
@@ -254,35 +271,56 @@
   }
   $conn->close();
   // Header sin buscador
-  include 'headernosearch.php';
+  include 'nuevo-header.php';
 
   ?>
 
   <main>
     <!-- Contenedor principal -->
-    <div class="d-flex flex-nowrap sidebar-height">
+    <div class="container-fluid bg-light-subtle pt-3">
       <!-- Aside/Wardrobe/Sidebar Menu -->
       <?php
-      include "sidebar.php";
+      
       ?>
       <!-- Fin de sidebar/aside -->
 
       <!-- Contenedor de ventana de contenido -->
-      <div class="col-9 offset-3 bg-light-subtle pt-3">
+      
         <div class="d-block p-3 m-2 h-100 ">
-          <h3 class="card-footer-text mt-2 mb-3 p-2">Ingreso personal</h3>
-          <div class="m-4">
-            <div class="col-md-5 position-relative">
-              <h2 class="text-dark-subtle title">Ingresar Nuevo personal</h2>
-            </div>
-
-          </div>
+        <div class="header">
+          <h2>Ingresar Nuevo Personal</h2>
+          
+        </div>
 
           <div>
             <h3 class="card-footer-text mt-2 mb-2 p-2 ">Datos personales</h3>
-
+            
             <!--Datos personales-->
             <form class="row g-3 m-4" method="post" action="ingresarpersonal.php" enctype="multipart/form-data">
+            <div class="dropdown">
+            <label class="form-label text-black-50" for="nombre_personal">Seleccionar Rol Personal*</label>
+            <select class="form-select form-select mb-3" name="rol_personal" id="rol_personal">
+              <option value="" disabled selected>Seleccionar</option>
+              <option value="director">Director</option>
+              <option value="administrativo">Administrativo</option>
+              <option value="docente">Docente</option>
+            </select>
+
+            <div class="row"> <!-- Creamos una fila para contener las dos columnas -->
+              <div class="col-md-6 position-relative">
+                <label class="form-label text-black-50" for="nombre_usuario">Nombre Usuario</label>
+                <input class="form-control" type="text" name="nombre_usuario" id="nombre_usuario" required>
+              </div>
+
+              <div class="col-md-6 position-relative">
+                <label class="form-label text-black-50" for="password_usuario">Contrasena</label>
+                <input class="form-control" type="password" name="password_usuario" id="password_usuario" required>
+              </div>
+            </div>
+
+            <hr class="separador">
+
+            </div>
               <div class="col-md-6 position-relative">
                 <label class="form-label text-black-50" for="nombre_personal">Nombre completo*</label>
                 <input class="form-control" type="text" name="nombre_personal" id="nombre_personal" required>
@@ -298,7 +336,12 @@
               </div>
               <div class="col-md-6 position-relative">
                 <label class="form-label text-black-50" for="telefono_personal">Número de teléfono*</label>
-                <input class="form-control" type="text" name="telefono_personal" id="telefono_personal" required>
+                <input class="form-control" type="text" name="telefono_personal" id="telefono_personal"
+                minlength="10" maxlength="10" 
+                pattern="\d{10}" 
+                title="Debe tener exactamente 10 dígitos" 
+                required>
+
               </div>
               <div class="col-md position-relative">
                 <label class="form-label text-black-50 text-nowrap" for="tipodoc_personal">Tipo de documento</label>
@@ -314,13 +357,13 @@
               </div>
               <div class="col-md-4  position-relative">
                 <label class="form-label text-black-50" for="nrocuil_personal">Número de CUIL (xx-xxxxxxxx-x)*</label>
-                <input class="form-control" type="text" name="nrocuil_personal" id="nrocuil_personal" required>
+                <input class="form-control" type="text" name="nrocuil_personal" id="nrocuil_personal"  required>
               </div>
               <div class="col-md position-relative">
                 <label class="form-label text-black-50 text-nowrap" for="sexo_personal">Sexo</label>
-                <select class="form-select form-select mb-3" name="sexo_personal[]">
+                <select class="form-select form-select mb-3" name="sexo_personal" id="sexo_personal" required>
+                <option value="" disabled selected>Seleccionar</option>
                   <option value="femenino">Femenino</option>
-
                   <option value="masculino">Masculino</option>
                   <option value="otro">Otro</option>
                 </select>
@@ -494,8 +537,8 @@
               <!--Situación laboral-->
               <div class="col-md-4 position-relative">
                 <label class="form-label text-black-50 text-nowrap" for="estado_personal">Estado Profesor*:</label>
-                <select class="form-select form-select mb-3" name="estado_personal" id="estado_personal">
-                  <option>Seleccionar</option>
+                <select class="form-select form-select mb-3" name="estado_personal" id="estado_personal" required>>
+                  <option value="" disabled selected>Seleccionar</option>
                   <option value="titular">Titular</option>
                   <option value="provisional">Provisional</option>
                   <option value="suplente">Suplente</option>
@@ -545,6 +588,7 @@
 
             </form>
             <?php
+
             if ($_FILES) {
               $destino = $_FILES['archivoSubido']['name'];
               move_uploaded_file($_FILES['archivoSubido']['tmp_name'], $destino);
@@ -552,7 +596,8 @@
             }
 
 
-
+            // $nombre=$_FILES['archivo']['name']; linea de mas
+            // $nombre=$_FILES['archivo']['name']; linea de mas
             // $nombre=$_FILES['archivo']['name'];
 // $guardado=$_FILES['archivo']['tmp_name'];
             
@@ -608,9 +653,33 @@
     </div>
     <!-- Fin de contenedor principal -->
   </main>
+
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const form = document.querySelector('form');
+      const rolPersonal = document.getElementById('rol_personal');
+      const submitButton = document.querySelector('input[type="submit"]');
+
+      // Desactiva el botón de envío al principio
+      submitButton.disabled = true;
+
+      // Función para habilitar el botón de envío si se selecciona un rol
+      function checkRolSelection() {
+        submitButton.disabled = rolPersonal.value === '';
+      }
+
+      // Añadir un evento para cuando cambie el valor del select
+      rolPersonal.addEventListener('change', checkRolSelection);
+
+      
+    });
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
     crossorigin="anonymous"></script>
+
 </body>
 
 </html>

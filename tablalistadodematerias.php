@@ -11,14 +11,13 @@
 </head>
 <body>
 <?php
-include ("variablesPath.php");
-require(rutas::$pathConetion);
+require('./conexion.php');
 
 // Consultar los datos con posibilidad de búsqueda
 $searchTerm = isset($_GET['q']) ? $_GET['q'] : '';
 $filter = isset($_GET['filter']) ? $_GET['filter'] : 'all';
 
-$sql = "SELECT id_materia, cod_num, cod_alpha, denominacion_materia, tipo_aprobacion, nota_min_aprobacion, trayecto, correlatividades, estado_materia, ciclo_electivo, campo_formativo, carga_horaria_materia 
+$sql = "SELECT id_materia, cod_num, cod_alpha, denominacion_materia, tipo_aprobacion, nota_min_aprobacion, correlatividades, estado_materia, campo_formativo, carga_horaria_materia 
         FROM materia ";
 
 if ($filter !== 'all') {
@@ -27,18 +26,16 @@ if ($filter !== 'all') {
 
 $result = $conn->query($sql);
 
+require ("variablesPath.php");
 include rutas::$pathNuevoHeader;
 ?>
 
 <main>
     <!-- Contenedor principal -->
     <div class="d-flex flex-nowrap sidebar-height"> 
-        <!-- Aside/Wardrobe/Sidebar Menu --> 
-      <!--  <//?php// include "sidebar.php"; ?>-->  
-        <!-- Fin de sidebar/aside -->
       
         <!-- Contenedor de ventana de contenido -->
-        <div class="container">
+        <div class="container-fluid">
             <div class="table-responsive">
                 <h3 class="card-footer-text mt-2 mb-5 p-2">Materias</h3>
                 <div class="m-4">
@@ -55,13 +52,9 @@ include rutas::$pathNuevoHeader;
                             </select>
                             <input type="text" class="form-control" placeholder="Buscar" name="q" value="<?php echo $searchTerm; ?>">
                             <button class="btn btn-outline-secondary" type="submit">Buscar</button>
-                            <a href=<?=rutas::$pathTablaListadodeMaterias?> class="btn btn-primary custom-button ms-2">volver a Listado</a>
                         </div>
-
-
-                        
                     </form>
-                    <a href="ingresomateria.php" class="btn btn-primary custom-button mt-1">Ingresar Materia</a>
+                    <a href=<?=rutas::$pathIngresoMateria?> class="btn btn-primary custom-button mt-3">Ingresar Materia</a>
 
                     <table class="table table-bordered table-striped mt-3 space-between">
                         <thead>
@@ -76,9 +69,10 @@ include rutas::$pathNuevoHeader;
                                 <th>Editar<br>Materia</th>
                                 <th>Ver<br>Materia</th>
                                 <th>Asignar<br>Profesor</th>
+                                <th>Ver<br>Profesores</th>
                             </tr>
                         </thead>
-                        <tbody class = "align-middle">
+                        <tbody>
                             <?php
                             if ($result->num_rows > 0) {
                                 $datos = array();
@@ -94,27 +88,33 @@ include rutas::$pathNuevoHeader;
                                     echo "<td>" . $fila['tipo_aprobacion'] . "</td>";
                                     echo "<td>" . $fila['correlatividades'] . "</td>";
 
-                                    echo "<td><a href='asignarmaterias.php?id_materia=".$fila['id_materia']."' class='btn btn-custom-view d-flex justify-content-center align-items-center' title='Agregar Materias Correlativas'>";
+                                    echo "<td><a href='".rutas::$pathAsignarMaterias."?id_materia=".$fila['id_materia']."' class='btn btn-custom-view' title='Agregar Materias Correlativas'>";
                                     echo "<i class='fa-solid fa-plus'></i>";
                                     echo "</a></td>";
 
-                                    echo "<td><a href='vermateriascorrelativas.php?id_materia=".$fila['id_materia']."' class='btn btn-custom-view  d-flex justify-content-center align-items-center ' title='Ver Materias Correlativas'>";
+                                    echo "<td><a href='".rutas::$pathVerMateriasCorrelativas."?id_materia=".$fila['id_materia']."' class='btn btn-custom-view' title='Ver Materias Correlativas'>";
                                     echo "<i class='fa-solid fa-book' style='color: #0077FF;'></i>";
                                     echo "</a></td>";
 
-                                    echo "<td><a href='nuevomodificarmateria.php?id_materia=".$fila["id_materia"]."' class='btn btn-custom-edit  d-flex justify-content-center align-items-center' title='Editar Materia'>";
+                                    echo "<td><a href='".rutas::$pathNuevoModifiCarmateria."?id_materia=".$fila["id_materia"]."' class='btn btn-custom-edit' title='Editar Materia'>";
                                     echo "<i class='fas fa-pencil-alt'></i>";
                                     echo "</a></td>";
 
-                                    echo "<td><a href='vermateria.php?id_materia=".$fila["id_materia"]." ' class='btn btn-custom-view d-flex justify-content-center align-items-center' title='Ver materia'>";
+                                    echo "<td><a href='".rutas::$pathVerMateria."?id_materia=".$fila["id_materia"]."' class='btn btn-custom-view' title='Ver materia'>";
                                     echo "<i class='fas fa-eye'></i>";
                                     echo "</a></td>";
 
-                                    echo "<td><a href='asignarprofesor.php?id_materia=" . $fila['id_materia'] . "' class='btn btn-custom-view d-flex justify-content-center align-items-center ' title='Asignar Profesor'>";
+                                    echo "<td><a href='".rutas::$pathAsignarProfesor."?id_materia=" . $fila['id_materia'] . "' class='btn btn-custom-view' title='Asignar Profesor'>";
                                     echo "<i class='fas fa-user text-info'></i>";
                                     echo "</a></td>";
     
+
+                                    echo "<td><a href='verprofesoresmateria.php?id_materia=" . $fila["id_materia"] . " ' class='btn btn-custom-view' title='Ver Profesores'>";
+                                    echo "<i class='fas fa-eye'></i>";
+                                    echo "</a></td>";
+
                                     echo "</tr>";
+
                                 }
 
                                 if (empty($datos)) {

@@ -11,7 +11,7 @@
 <body>
     <?php
         include "variablesPath.php";
-        require(rutas::$pathConetion);
+        require(rutas::$pathConection);
         include(rutas::$pathNuevoHeader);
 
         // Función para obtener los datos del estudiante

@@ -93,7 +93,7 @@
                   <li class="nav-item"><a class="nav-link menu" href="tablaestudiantes.php">Estudiantes</a></li>
                   <li class="nav-item"><a class="nav-link menu" href="tablaspersonal.php">Personal</a></li>
                   <li class="nav-item"><a class="nav-link menu" href="tablalistadocarreras.php">Carreras</a></li>
-                  <li class="nav-item"><a class="nav-link menu" href="tablalistadodematerias.php">Materias</a></li>
+                  <li class="nav-item"><a class="nav-link menu" href="tablalistadomaterias.php">Materias</a></li>
                   <li class="nav-item"><a class="nav-link menu" href="#">Notas</a></li>
                   <li class="nav-item"><a class="nav-link menu" href="#">Ciclo academico</a></li>
                 </ul>

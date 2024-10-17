@@ -57,20 +57,20 @@
     $conn->close();
 
     // Header sin buscador
-    include 'headernosearch.php';
+    include 'nuevo-header.php';
 
     ?>
 
     <main>
         <!-- Contenedor principal -->
-        <div class="d-flex flex-nowrap sidebar-height">
+        <div class="container-fluid bg-light-subtle pt-3">
             <!-- Aside/Wardrobe/Sidebar Menu -->
             <?php
-            include "sidebar.php";
+            
             ?>
             <!-- Fin de sidebar/aside -->
             <!-- Contenedor de ventana de contenido -->
-            <div class="col-9 offset-3 bg-light-subtle pt-3">
+            
                 <div class="d-block p-3 m-2 h-100 ">
                     <h3 class="card-footer-text mt-2 mb-3 p-2">Personal</h3>
                     <div class="m-4">

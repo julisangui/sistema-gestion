@@ -9,38 +9,51 @@
     <link rel="stylesheet" href="./styles/style.css">
 </head>
 
-
 <?php
 require('./conexion.php');
-// Crear la tabla si no existe
-
-$msge="";
+$msge = "";
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $nombre_usuario = $_POST['nombre_usuario'];
-    $contrasenia = $_POST['contrasenia'];
+    // Escapar las entradas del usuario
+    $nombre_usuario = htmlspecialchars($_POST['nombre_usuario'], ENT_QUOTES, 'UTF-8');
+    $password_usuario = htmlspecialchars($_POST['password_usuario'], ENT_QUOTES, 'UTF-8');
 
-    $resultado = mysqli_query($conn, "SELECT contrasenia FROM usuario WHERE nombre_usuario = '$nombre_usuario'");
+    // Validar el nombre de usuario (ejemplo: solo letras y números, longitud de 3 a 20)
+    if (!preg_match("/^[a-zA-Z0-9]{3,20}$/", $nombre_usuario)) {
+        $msge = "<h5 style='color: #CA2E2E;'>El nombre de usuario debe contener solo letras y números y tener entre 3 y 20 caracteres.</h5>";
+    } 
+    // Validar la contraseña (ejemplo: al menos 6 caracteres)
+    else if (!preg_match("/^.{6,}$/", $password_usuario)) {
+        $msge = "<h5 style='color: #CA2E2E;'>La contraseña debe tener al menos 6 caracteres.</h5>";
+    } 
+    else {
+        // consultas preparadas para evitar inyección SQL
+        $stmt = $conn->prepare("SELECT password_usuario FROM personal WHERE nombre_usuario = ?");
+        $stmt->bind_param("s", $nombre_usuario);
+        $stmt->execute();
+        $resultado = $stmt->get_result();
 
-    if ($resultado && $row = mysqli_fetch_assoc($resultado)) {
-        $contrasenia_hash = $row['contrasenia'];
+        if ($resultado && $row = $resultado->fetch_assoc()) {
+            $stored_password = $row['password_usuario']; // Contraseña almacenada en la base de datos (texto plano)
 
-        // Verifica si la contraseña ingresada coincide con el hash almacenado
-        if (password_verify($contrasenia, $contrasenia_hash)) {
-            // Contraseña válida, redirige al usuario
-            $msge = "<h5 style='color: #2ECA6A;'>Bienvenido, ".$nombre_usuario.".</h5>";
-            
-            echo "<meta http-equiv='refresh' content='3;url=index.php'>";
-
+            // Verifica si la contraseña ingresada coincide con la almacenada en texto plano
+            if ($password_usuario === $stored_password) {
+                // Contraseña válida, redirige al usuario
+                $msge = "<h5 style='color: #2ECA6A;'>Bienvenido, " . htmlspecialchars($nombre_usuario, ENT_QUOTES, 'UTF-8') . ".</h5>";
+                echo "<meta http-equiv='refresh' content='3;url=index.php'>";
+            } else {
+                $msge = "<h5 style='color: #CA2E2E;'>Usuario y/o contraseña incorrectos. Intente de nuevo.</h5>";
+            }
         } else {
-            $msge = "<h5 style='color: #CA2E2E;'>Usuario y/o contraseña incorrectos. Intente de nuevo.</h5>";
+            $msge = "<h5 style='color: #CA2E2E;'>Usuario no encontrado.</h5>";
         }
-    } else {
-        $msge = "<h5 style='color: #CA2E2E;'>Usuario y/o contraseña incorrectos. Intente de nuevo.</h5>";
+        $stmt->close();
     }
-
     $conn->close();
 }
+
+
 ?>
+
 <body>
     <div class="d-flex">
         <!-- Login -->
@@ -61,8 +74,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         
                     <!-- Password input -->
                     <div class="form-outline mb-4">
-                        <label class="form-label" for="contrasenia">Contraseña</label>
-                        <input type="password" id="contrasenia" class="form-control" name="contrasenia"/>
+                        <label class="form-label" for="password_usuario">Contraseña</label>
+                        <input type="password" id="password_usuario" class="form-control" name="password_usuario"/>
                         
                     </div>
         

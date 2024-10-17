@@ -11,7 +11,7 @@
 <body>
     <?php
         include "variablesPath.php";
-        require(rutas::$pathConetion);
+        require(rutas::$pathConection);
 
         // Verifica si se ha pasado el ID de estudiante
         if (isset($_GET['id_estudiante'])) {
@@ -37,8 +37,12 @@
 
                 // Inserta las materias seleccionadas en la tabla cursada
 
+<<<<<<< HEAD
                 $sql_insert = "INSERT INTO cursada (id_estudiante, id_ciclo_electivo, estado_inscripcion, estado_materia, horario_cursada, id_materia, id_carrera, fecha_estado_materia) 
                             VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+=======
+                $sql_insert = "INSERT INTO cursada (id_estudiante, id_ciclo_electivo, estado_inscripcion, estado_materia, horario_cursada, id_materia, id_carrera, fecha_estado_materia) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+>>>>>>> 4decf46 (archivos añadidos)
 
                 $stmt_insert = $conn->prepare($sql_insert);
 

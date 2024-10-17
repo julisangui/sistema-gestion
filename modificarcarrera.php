@@ -12,7 +12,7 @@
 <?php 
 try{
     include "variablesPath.php";
-    require(rutas::$pathConetion);
+    require(rutas::$pathConection);
     $msge="";
     // Obtener el ID del registro a editar
 $id_carrera = $_GET['id_carrera'];
@@ -107,19 +107,19 @@ $row = $result->fetch_assoc();
 finally{
     $conn->close();
   }
-include rutas::$pathHeadernoSearch;
+include rutas::$pathNuevoHeader;
 ?>
 <main>
     <!-- Contenedor principal -->
     <div class="d-flex flex-nowrap sidebar-height"> 
       <!-- Aside/Wardrobe/Sidebar Menu --> 
       <?php
-      include rutas::$pathSlidebar; 
+      //include rutas::$pathSlidebar; 
         ?>  
       <!-- Fin de sidebar/aside -->
       <!-- Contenedor de ventana de contenido -->
-      <div class="col-9 offset-3 bg-light-subtle pt-5">
-            <div class="d-block p-3 m-4 h-100 ">
+      <div class="container-fluid">
+            <div class="table-responsive">
                 <h3 class="card-footer-text mt-2 mb-5 p-2">Editar Carrera</h3>
                 <div class="m-4">
                     <h2 class="text-dark-subtle title"><?php echo $row['nombre_carrera']; ?></h2>

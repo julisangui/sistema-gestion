@@ -12,7 +12,8 @@
 
 <body>
     <?php
-    require('./conexion.php');
+    include "variablesPath.php";
+    require(rutas::$pathConection);
     $msge = "";
 
     // Verificar si se ha enviado un ID de carrera de referencia
@@ -27,17 +28,17 @@
         if ($result->num_rows > 0) {
             $rowc = $result->fetch_assoc();
         } else {
-            /*  echo "Carrera no encontrada."; */
+           
             $msge = "<h5 style='color: #CA2E2E;'>Carrera no encontrada.</h5>";
             exit();
         }
     } else {
-        /* echo "ID de carrera no especificado."; */
+       
         $msge = "<h5 style='color: #CA2E2E;'>ID de carrera no especificado.</h5>";
         $stmt->close();
         exit();
     }
-    /* $conn->close(); */
+  
 
     //Traer los datos de materias disponibles:
     $sql2 = "SELECT id_materia, denominacion_materia FROM materia";
@@ -76,7 +77,7 @@
         // Cerrar la consulta
         $stmt->close();
     }
-    include "header.php";
+    include rutas::$pathNuevoHeader;
     //cerrar la conexión */
     $conn->close();
 
@@ -87,11 +88,11 @@
         <div class="d-flex flex-nowrap sidebar-height">
             <!-- Aside/Wardrobe/Sidebar Menu -->
             <?php
-            include "sidebar.php";
+        
             ?>
 
-            <div class="col-9 offset-3 bg-light-subtle pt-5">
-                <div class="d-block p-3 m-4 h-100 ">
+            <div class="container-fluid">
+                <div class="table-responsive">
                     <h3 class="card-footer-text mt-2 mb-5 p-2">Asignar materia a Carrera
                         <?php echo $rowc['nombre_carrera']; ?></h3>
                     <div class="m-4 d-flex align-items-center gap-3">
@@ -118,9 +119,11 @@
                                     <input class="form-control" type="text" name="nombre_carrera" id="nombre_carrera"
                                         value="<?php echo $rowc['nombre_carrera']; ?>" disabled>
                                 </div>
-                                <div class="col-md-3 position-relative">
-                                    <label class="form-label text-black-50 text-nowrap" for="asignar_materia">Asignar
-                                        materia:</label>
+                                <div class="col-md-6 position-relative">
+                                    <label class="form-control text-black-50 text-nowrap" for="asignar_materia">Asignar materia:
+                                    </label>
+                                </div>
+                                <div class="col-md-6 position-relative">
                                     <select class="form-select form-select mb-3" name="asignar_materia"
                                         id="asignar_materia" aria-label="asignar_materia">
                                         <?php
@@ -132,7 +135,10 @@
                                         ?>
                                     </select>
                                 </div>
-                                <div class="col-md-6 offset-2 mb-5">
+
+
+
+                                <div class="table-responsive">
                                     <div class="d-flex mb-5 gap-2 justify-content-between align-content-center">
                                         <a href='vercarrera.php?id_carrera=<?= $id_carrera ?>'
                                             class='btn btn-primary menu-icon border-0 px-4'>Volver</a>

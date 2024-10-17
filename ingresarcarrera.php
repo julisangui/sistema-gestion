@@ -11,7 +11,7 @@
 <?php
 try{
 include "variablesPath.php";
-require(rutas::$pathConetion);
+require(rutas::$pathConection);
 $msge="";
 $validacion="";
 
@@ -97,15 +97,12 @@ $validacion="";
         $stmt->close();
     }
     if (isset($_POST["volver"])) {
-        header("Location: tablalistadocarreras.php");
+        header("Location: ".rutas::$pathTablaListadoCarreras);
         exit();
     }
 
     }
-/* if (isset($_POST["volver"])) {
-    header("Location: tablalistadocarreras.php");
-    exit();
-} */
+
 
 }catch(Exception $e){
     echo "<h5 style='color: #CA2E2E;'>Error conectando a la base de datos: " . $e->getMessage() . "</h5>";
@@ -113,7 +110,7 @@ $validacion="";
 finally{
     $conn->close();
   }
-include rutas::$pathHeadernoSearch;
+include rutas::$pathNuevoHeader;
 ?>
 
 <main>
@@ -121,15 +118,14 @@ include rutas::$pathHeadernoSearch;
     <div class="d-flex flex-nowrap sidebar-height"> 
       <!-- Aside/Wardrobe/Sidebar Menu --> 
       <?php
-      include rutas::$pathSlidebar; 
         ?>  
-      <!-- Fin de sidebar/aside -->
+      
       <!-- Contenedor de ventana de contenido -->
-      <div class="col-9 offset-3 bg-light-subtle pt-5">
-            <div class="d-block p-3 m-4 h-100 ">
-                <h3 class="card-footer-text mt-2 mb-5 p-2">Carreras</h3>
-                <div class="m-4">
-                    <h2 class="text-dark-subtle title">Ingresar Nueva Carrera</h2>
+      <div class="container-fluid">
+            <div class="table-responsive ">
+                <h3 class="card-footer-text mt-1 p-1">Carreras</h3>
+                <div class="card-footer-text mt-1 p-1">
+                    <h3 class="text-dark-subtle title">Ingresar Nueva Carrera</h3>
                     <?=$msge?>
                     <!-- <h6 class="text-black-50">
                         *Dar de alta las Materias para la carrera correspondiente
@@ -159,7 +155,7 @@ include rutas::$pathHeadernoSearch;
                         <div class="col-md-2 position-relative">
                             <label class="form-label text-black-50 text-nowrap" for="nivel">Nivel*:</label>
                                 <select class="form-select form-select mb-2" name="nivel" id="nivel" aria-label="select nivel" required>
-                                    <option value="primaria">Primaria</option>
+                                    <option value="primaria">CFP</option>
                                     <option value="segundaria">Segundaria</option>
                                     <option value="terciario">Terciario</option>
                                     <option value="universitario">Universitario</option>

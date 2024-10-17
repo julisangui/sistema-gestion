@@ -23,7 +23,6 @@
 
         // Consultar la materia existente
         $sql = "SELECT * FROM personal WHERE id_personal=?";
-        //    $sql = "SELECT * FROM personal WHERE id_personal = ?";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("i", $id_personal);
         $stmt->execute();
@@ -41,175 +40,174 @@
     }
     // Obtener los datos del formulario
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        $new_nombre_personal_n = $_POST['nombre_personal'];
-        $new_apellido_personal_n = $_POST['apellido_personal'];
-        $new_email_personal_n = $_POST['email_personal'];
-        $new_tipodoc_personal_n = $_POST['tipodoc_personal'];
-
-        $new_nrodni_personal_n = $_POST['nrodni_personal'];
-        $new_nrocuil_personal_n = $_POST['nrocuil_personal'];
-        $new_sexo_personal_n = $_POST['sexo_personal'];
-        $new_fechanac_personal_n = $_POST['fechanac_personal'];
-        $new_paisnac_personal_n = $_POST['paisnac_personal'];
-
-        $new_lugarnac_personal_n = $_POST['lugarnac_personal'];
-        $new_fecha_designacion_n = $_POST['fecha_designacion'];
-        $new_paisdomic_personal_n = $_POST['paisdomic_personal'];
-        $new_provdomic_personal_n = $_POST['provdomic_personal'];
-
-        $new_calle_personal_n = $_POST['calle_personal'];
-        $new_depto_personal_n = $_POST['depto_personal'];
-        $new_edificio_personal_n = $_POST['edificio_personal'];
-
-        $new_localidad_personal_n = $_POST['localidad_personal'];
-        $new_partido_personal_n = $_POST['partido_personal'];
-        $new_titulo_n = $_POST['titulo'];
-        $new_titulo_institucion_n = $_POST['titulo_institucion'];
-
-        $new_tipo_titulo_n = $_POST['tipo_titulo'];
-        $new_carr1_n = $_POST['carr1'];
-        $new_carr1_institucion_n = $_POST['carr1_institucion'];
-        $new_carr1_estado_n = $_POST['carr1_estado'];
-
-        $new_carr1_titulo_n = $_POST['carr1_titulo'];
-        $new_carr2_n = $_POST['carr2'];
-        $new_carr2_institucion_n = $_POST['carr2_institucion'];
-        $new_carr2_estado_n = $_POST['carr2_estado'];
-
-
-        $new_carr2_titulo_n = $_POST['carr2_titulo'];
-        $new_estado_personal_n = $_POST['estado_personal'];
-        $new_observaciones_n = $_POST['observaciones'];
-        // $repo_documentos = $_POST['repo_documentos'];
-        $new_telefono_personal = $_POST['telefono_personal'];
-        $new_nro_designacion = $_POST['nro_designacion'];
-        $nro_personal = $_POST['nro_personal'];
-        $new_piso_personal = $_POST['piso_personal'];
-        $new_cp_personal = $_POST['cp_personal'];
-        $new_anio_egreso = $_POST['anio_egreso'];
-        $new_carr1_anioegreso = $_POST['carr1_anioegreso'];
-        $carr2_anioegreso = $_POST['carr2_anioegreso'];
-        $new_DNIchecked = $_POST['DNIchecked'];
-        $new_CUILchecked = $_POST['CUILchecked'];
-        $new_CVchecked = $_POST['CVchecked'];
-        $new_TITchecked = $_POST['TITchecked'];
+            // Capturar el valor del select
+            if (isset($_POST['rol_personal'])) {
+              $rol_personal = $_POST['rol_personal'];
+              $rol_personal = strtoupper($rol_personal);
+              }
+            $nombre_usuario = strtoupper($_POST['nombre_usuario']);
+            $password_usuario = strtoupper($_POST['password_usuario']);
+            $nombre_personal_n = strtoupper($_POST['nombre_personal']);
+            $apellido_personal_n = strtoupper($_POST['apellido_personal']);
+            $email_personal_n = strtoupper($_POST['email_personal']);
+            $tipodoc_personal_n = strtoupper($_POST['tipodoc_personal']);
+            $nrodni_personal_n = strtoupper($_POST['nrodni_personal']);
+            $nrocuil_personal_n = strtoupper($_POST['nrocuil_personal']);
+        
+            if (isset($_POST['sexo_personal'])) {
+              $sexo_personal = $_POST['sexo_personal'];
+              $sexo_personal = strtoupper($sexo_personal);
+              }
+        
+            $fechanac_personal_n = strtoupper($_POST['fechanac_personal']);
+            $paisnac_personal_n = strtoupper($_POST['paisnac_personal']);
+            $lugarnac_personal_n = strtoupper($_POST['lugarnac_personal']);
+            $fecha_designacion_n = strtoupper($_POST['fecha_designacion']);
+            $paisdomic_personal_n = strtoupper($_POST['paisdomic_personal']);
+            $provdomic_personal_n = strtoupper($_POST['provdomic_personal']);
+            $calle_personal_n = strtoupper($_POST['calle_personal']);
+            $depto_personal_n = strtoupper($_POST['depto_personal']);
+            $edificio_personal_n = strtoupper($_POST['edificio_personal']);
+            $localidad_personal_n = strtoupper($_POST['localidad_personal']);
+            $partido_personal_n = strtoupper($_POST['partido_personal']);
+            $titulo_n = strtoupper($_POST['titulo']);
+            $titulo_institucion_n = strtoupper($_POST['titulo_institucion']);
+            $tipo_titulo_n = strtoupper($_POST['tipo_titulo']);
+            $carr1_n = strtoupper($_POST['carr1']);
+            $carr1_institucion_n = strtoupper($_POST['carr1_institucion']);
+            $carr1_estado_n = strtoupper($_POST['carr1_estado']);
+            $carr1_titulo_n = strtoupper($_POST['carr1_titulo']);
+            $carr2_n = strtoupper($_POST['carr2']);
+            $carr2_institucion_n = strtoupper($_POST['carr2_institucion']);
+            $carr2_estado_n = strtoupper($_POST['carr2_estado']);
+            $carr2_titulo_n = strtoupper($_POST['carr2_titulo']);
+            $estado_personal_n = strtoupper($_POST['estado_personal']);
+            $telefono_personal = strtoupper($_POST['telefono_personal']);
+            $nro_designacion = strtoupper($_POST['nro_designacion']);
+            $nro_personal = strtoupper($_POST['nro_personal']);
+            $piso_personal = strtoupper($_POST['piso_personal']);
+            $cp_personal = strtoupper($_POST['cp_personal']);
+            $anio_egreso = strtoupper($_POST['anio_egreso']);
+            $carr1_anioegreso = strtoupper($_POST['carr1_anioegreso']);
+            $carr2_anioegreso = strtoupper($_POST['carr2_anioegreso']);
+        
+            if (isset($_POST['estado_personal'])) {
+              $estado_personal = $_POST['estado_personal'];
+              $estado_personal = strtoupper($estado_personal);
+              }
+        
+            $DNIchecked = isset($_POST['check_lista']) ? 1 : 0;
+            $CUILchecked = isset($_POST['check_cuil']) ? 1 : 0;
+            $CVchecked = isset($_POST['check_cv']) ? 1 : 0;
+            $TITchecked = isset($_POST['check_tit']) ? 1 : 0;
          //Sentencia SQL para insertar los datos
     
-        $sql = "UPDATE personal SET
-    nombre_personal=?,
-    apellido_personal=?,
-    email_personal=?,
-    telefono_personal=?,
-    tipodoc_personal=?,
+         $sql = "UPDATE personal SET
+        rol_personal=?,
+        nombre_usuario=?,
+        password_usuario=?,
+        nombre_personal=?,
+        apellido_personal=?,
+        email_personal=?,
+        telefono_personal=?,
+        tipodoc_personal=?,
+        nrodni_personal=?,
+        nrocuil_personal=?,
+        sexo_personal=?,
+        fechanac_personal=?,
+        paisnac_personal=?,
+        lugarnac_personal=?,
+        fecha_designacion=?,
+        nro_designacion=?,
+        paisdomic_personal=?,
+        provdomic_personal=?,
+        calle_personal=?,
+        nro_personal=?,
+        piso_personal=?,
+        depto_personal=?,
+        edificio_personal=?,
+        localidad_personal=?,
+        partido_personal=?,
+        cp_personal=?,
+        titulo=?,
+        titulo_institucion=?,
+        anio_egreso=?,
+        tipo_titulo=?,
+        carr1=?,
+        carr1_institucion=?,
+        carr1_estado=?,
+        carr1_anioegreso=?,
+        carr1_titulo=?,
+        carr2=?,
+        carr2_institucion=?,
+        carr2_estado=?,
+        carr2_anioegreso=?,
+        carr2_titulo=?,
+        estado_personal=?,
+        DNIchecked=?,
+        CUILchecked=?,
+        CVchecked=?,
+        TITchecked=? WHERE id_personal=?";
+    }
+    $stmt = $conn->prepare($sql);
     
-    nrodni_personal=?,
-    nrocuil_personal=?,
-    sexo_personal=?,
-    fechanac_personal=?,
-    paisnac_personal=?,
-    
-    lugarnac_personal=?,
-    fecha_designacion=?,
-    nro_designacion=?,
-    paisdomic_personal=?,
-    provdomic_personal=?,
-    
-    calle_personal=?,
-    nro_personal=?,
-    piso_personal=?,
-    depto_personal=?,
-    edificio_personal=?,
-    
-    localidad_personal=?,
-    partido_personal=?,
-    cp_personal=?,
-    titulo=?,
-    titulo_institucion=? ,
-    
-    anio_egreso=?,
-    tipo_titulo=?,
-    carr1=?,
-    carr1_institucion=?,
-    carr1_estado=?,
-    
-    carr1_anioegreso=?,
-    carr1_titulo=?,
-    carr2=?,
-    carr2_institucion=?,
-    carr2_estado=?,
-    
-    carr2_anioegreso=?,
-    carr2_titulo=?,
-    estado_personal=?,
-    observaciones=?,
-    DNIchecked=?,
-    CUILchecked=?,
-    CVchecked=?,
-    TITchecked=?
-    WHERE id_personal=?";
-
-        $stmt = $conn->prepare($sql);
-
-        $stmt->bind_param(
-            "sssis sssss ssiss siiss ssiss issss issss issss ii",
-            $new_nombre_personal,
-            $new_apellido_personal,
-            $new_email_personal,
-            $new_telefono_personal,
-            $new_tipodoc_personal,
-
-            $new_nrodni_personal,
-            $new_nrocuil_personal,
-            $new_sexo_personal,
-            $new_fechanac_personal,
-            $new_paisnac_personal,
-
-            $new_lugarnac_personal,
-            $new_fecha_designacion,
-            $new_nro_designacion,
-            $new_paisdomic_personal,
-            $new_provdomic_personal,
-
-            $new_calle_personal,
-            $new_nro_personal,
-            $new_piso_personal,
-            $new_depto_personal,
-            $new_edificio_personal,
-
-            $new_localidad_personal,
-            $new_partido_personal,
-            $new_cp_personal,
-            $new_titulo,
-            $new_titulo_institucion,
-
-            $new_anio_egreso,
-            $new_tipo_titulo,
-            $new_carr1,
-            $new_carr1_institucion,
-            $new_carr1_estado,
-
-            $new_carr1_anioegreso,
-            $new_carr1_titulo,
-            $new_carr2,
-            $new_carr2_institucion,
-            $new_carr2_estado,
-
-            $new_carr2_anioegreso,
-            $new_carr2_titulo,
-            $new_estado_personal,
-            $new_observaciones,
-            $new_DNIchecked,
-            $new_CUILchecked,
-            $new_CVchecked,
-            $new_TITchecked,
-            $id_personal
-        );
+    // Contar los parámetros y ajustar la cadena de tipos
+    $stmt->bind_param(
+        "ssssssissssssssisssiissssississssissssissiiiii",
+        $rol_personal,
+        $nombre_usuario,
+        $password_usuario,
+        $nombre_personal_n,
+        $apellido_personal_n,
+        $email_personal_n,
+        $telefono_personal,
+        $tipodoc_personal_n,
+        $nrodni_personal_n,
+        $nrocuil_personal_n,
+        $sexo_personal,
+        $fechanac_personal_n,
+        $paisnac_personal_n,
+        $lugarnac_personal_n,
+        $fecha_designacion_n,
+        $nro_designacion,
+        $paisdomic_personal_n,
+        $provdomic_personal_n,
+        $calle_personal_n,
+        $nro_personal,
+        $piso_personal,
+        $depto_personal_n,
+        $edificio_personal_n,
+        $localidad_personal_n,
+        $partido_personal_n,
+        $cp_personal,
+        $titulo_n,
+        $titulo_institucion_n,
+        $anio_egreso,
+        $tipo_titulo_n,
+        $carr1_n,
+        $carr1_institucion_n,
+        $carr1_estado_n,
+        $carr1_anioegreso,
+        $carr1_titulo_n,
+        $carr2_n,
+        $carr2_institucion_n,
+        $carr2_estado_n,
+        $carr2_anioegreso,
+        $carr2_titulo_n,
+        $estado_personal,
+        $DNIchecked,
+        $CUILchecked,
+        $CVchecked,
+        $TITchecked,
+        $id_personal // Pasar el id_personal al final
+    );
 
         if ($stmt->execute()) {
 
             if ($stmt->affected_rows > 0) {
-                header("Location: tablasprofesor.php");
+                header("Location: tablaspersonal.php");
 
                 exit();
             } else {
@@ -240,20 +238,20 @@
     $conn->close();
 
     // Header sin buscador
-    include 'headernosearch.php';
-
+    include 'nuevo-header.php';
+    
     ?>
 
     <main>
         <!-- Contenedor principal -->
-        <div class="d-flex flex-nowrap sidebar-height">
+        <div class="container-fluid bg-light-subtle pt-3">
             <!-- Aside/Wardrobe/Sidebar Menu -->
             <?php
             // include "sidebar.php";
             ?>
             <!-- Fin de sidebar/aside -->
             <!-- Contenedor de ventana de contenido -->
-            <div class="col-9 offset-3 bg-light-subtle pt-3">
+            
                 <div class="d-block p-3 m-2 h-100 ">
                     <h3 class="card-footer-text mt-2 mb-3 p-2">Personal</h3>
                     <div class="m-4">
@@ -274,6 +272,24 @@
                         <form class="row g-3 m-4" method="post"
                             action="edicionpersonal.php?id_personal=<?= $id_personal ?>">
 
+                            <div class="col-md-6 position-relative">
+                                <label class="form-label text-black-50" for="rol_personal">Rol personal*</label>
+                                <input class="form-control" type="text" name="rol_personal" id="rol_personal"
+                                    value="<?= $row['rol_personal'] ?>">
+                            </div>
+
+                            <div class="col-md-6 position-relative">
+                                <label class="form-label text-black-50" for="nombre_usuario">Nombre usuario*</label>
+                                <input class="form-control" type="text" name="nombre_usuario" id="nombre_usuario"
+                                    value="<?= $row['nombre_usuario'] ?>">
+                            </div>
+
+                            <div class="col-md-6 position-relative">
+                                <label class="form-label text-black-50" for="password_usuario">Password Usuario*</label>
+                                <input class="form-control" type="password" name="password_usuario" id="password_usuario"
+                                    value="<?= $row['password_usuario'] ?>">
+                            </div>
+                            
                             <div class="col-md-6 position-relative">
                                 <label class="form-label text-black-50" for="nombre_personal">Nombre completo*</label>
                                 <input class="form-control" type="text" name="nombre_personal" id="nombre_personal"

@@ -39,11 +39,11 @@ if (isset($_GET['id_materia'])) {
     
     // 4. Consultar las materias correlativas y el tipo de aprobación
     try {
-        $sql = "SELECT m.id_materia, ta.nombre_tipo_aprobacion, (select m.denominacion_materia from materia as m where id_materia = mc.materia_correlativa) as materia_correlativa
-        FROM materia AS m 
-        JOIN correlativas AS mc ON mc.id_materia = m.id_materia 
-        JOIN tipo_aprobacion AS ta ON ta.id_tipo_aprobacion = mc.tipo_aprobacion_correlativa
-        WHERE m.id_materia = $id_materia";
+        $sql = "SELECT concat (p.apellido_personal,' ',p.nombre_personal) as Profesor, c.nombre_carrera, m.anio_carrera  from materia_profesor mp 
+                    inner join personal p on mp.id_personal = p.id_personal  
+                    inner join materia m on mp.id_materia = m.id_materia
+                    inner join carrera c on c.id_carrera = m.id_carrera
+                    WHERE m.id_materia = $id_materia";
 
         
         $result = $conn->query($sql);
@@ -70,7 +70,7 @@ if (isset($_GET['id_materia'])) {
         
     <div class="container-fluid">
         <div class="d-block p-3 m-4 h-100 ">
-            <h3 class="card-footer-text mt-2 mb-5 p-2">Materias Correlativas de <?php echo $denominacion_materia?></h3>
+            <h3 class="card-footer-text mt-2 mb-5 p-2">profesores de <?php echo $denominacion_materia?></h3>
             <div class="m-4">
                 <h2 class="text-dark-subtle title">Listado</h2>
             </div>
@@ -80,7 +80,7 @@ if (isset($_GET['id_materia'])) {
             <form class="" method="POST" action="vermateriascorrelativas.php">
 
                 <div class="justify-content-start col-md-5 col-lg-auto flex-fill w-100 navbar navbar-expand-md vh-50 pt-4 p-3 gap-1">
-                <a href="#" class="btn btn-primary custom-button mt-3">Materias Correlativas</a>
+                <a href="#" class="btn btn-primary custom-button mt-3">Profesores</a>
                     <ul class="navbar-nav mt-3 bg-search rounded-2">
                         <li class="nav-item dropdown m-0 p-0 ">
                             <select class="form-select form-select p-2 me-4" name="filtrar" id="filtrar" aria-label="filtro">
@@ -110,8 +110,9 @@ if (isset($_GET['id_materia'])) {
                 <thead>
                     <tr>
                         <th class="d-none">ID Materia</th>
-                        <th>Materia Correlativa</th>
-                        <th>Tipo de Aprobación</th>
+                        <th>Nombre del Profesor</th>
+                        <th>carrera</th>
+                        <th>Año de la carrera</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -124,9 +125,9 @@ if (isset($_GET['id_materia'])) {
                         // Generar filas de la tabla
                         foreach ($datos as $fila) {
                             echo "<tr>";
-                            echo "<td class='d-none'>" . $fila['id_materia'] . "</td>";
-                            echo "<td>" . $fila['materia_correlativa'] . "</td>";
-                            echo "<td>" . $fila['nombre_tipo_aprobacion'] . "</td>";
+                            echo "<td>" . $fila['Profesor'] . "</td>";
+                            echo "<td>" . $fila['nombre_carrera'] . "</td>";
+                            echo "<td>" . $fila['anio_carrera'] . "</td>";
                             echo "</tr>";
                         }
                     } else {
@@ -142,7 +143,7 @@ if (isset($_GET['id_materia'])) {
         <div class="container table-resposive">
             <div class="d-flex mb-5 gap-2 justify-content-between align-content-center">
                 <a href="<?=rutas::$pathTablaListadoMaterias?>"><button class='btn btn-primary menu-icon border-0 px-4'>Volver</button></a>
-                <a href=<?=rutas::$pathAsignarMaterias."?id_materia=".$id_materia?>><button class='btn btn-primary menu-icon border-0 px-4'>Agregar Materia</button></a>
+                <a href=<?=rutas::$pathAsignarProfesor."?id_materia=".$id_materia?>><button class='btn btn-primary menu-icon border-0 px-4'>Asignar Profesor</button></a>
             </div>
         </div>
     </div>
