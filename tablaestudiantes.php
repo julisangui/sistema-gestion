@@ -121,9 +121,9 @@
                 echo "<td>" . $row["telefono"] . "</td>";
                 echo "<td>" . $row["estado_estudiante"] . "</td>";
                 echo "<td>" . $row["documentacion_completa"] . "</td>";
-                echo "<td><a href='formeditarestudiantes.php?id_estudiante=" . $row["id_estudiante"] . "' class='text-primary'><i class='bi bi-pencil-fill'></i></a></td>";
-                echo "<td><a href='listarestudiante.php?id_estudiante=" . $row["id_estudiante"] . "' class='text-primary'><i class='bi bi-eye-fill'></i></a></td>";
-                echo "<td><a href='asignarmateriaestudiante.php?id_estudiante=" . $row["id_estudiante"] . "' class='text-primary'><i class='bi bi-journal-text'></i></a></td>";
+                echo "<td><a href='formeditarestudiantes.php?id_estudiante=" . $row["id_estudiante"] . "' class='text-primary' title='Editar información del estudiante'><i class='bi bi-pencil-fill'></i></a></td>";
+                echo "<td><a href='listarestudiante.php?id_estudiante=" . $row["id_estudiante"] . "' class='text-primary' title='Ver estudiante'><i class='bi bi-eye-fill'></i></a></td>";
+                echo "<td><a href='asignarmateriaestudiante.php?id_estudiante=" . $row["id_estudiante"] . "' class='text-primary' title='Asignar materia al estudiante'><i class='bi bi-journal-text'></i></a></td>";
                 echo "</tr>";
               }
             } else {
