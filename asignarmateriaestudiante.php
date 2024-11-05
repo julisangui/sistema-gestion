@@ -9,7 +9,7 @@
     <title>Asignar materia</title>
 </head>
 <body>
-    <?php
+<?php
         include "variablesPath.php";
         require(rutas::$pathConection);
 
@@ -25,26 +25,18 @@
 
         // Obtener ciclos electivos disponibles.
         $sql_ciclos = "SELECT id_ciclo_electivo, nombre_ciclo FROM ciclo_electivo";
-        $stmt_ciclos = $conn->prepare($sql_ciclos);
-        $stmt_ciclos->execute();
-        $result_ciclos = $stmt_ciclos->get_result();
+        $result_ciclos = $conn->query($sql_ciclos);
 
-        // Trae el plan_carrera del estudiante estudiante seleccionado para saber a que carrera pertenece y transformarlo en su ID.
-        $sql_estudiante = "SELECT plan_carrera FROM estudiantes WHERE id_estudiante = ?";
-        $stmt_estudiante = $conn->prepare($sql_estudiante);
-        $stmt_estudiante->bind_param("i", $id_estudiante);
-        $stmt_estudiante->execute();
-        $result_sql = $stmt_estudiante->get_result();
+        // Trae el plan_carrera del estudiante estudiante seleccionado.
+        $sql_estudiante = "SELECT plan_carrera FROM estudiantes WHERE id_estudiante = $id_estudiante";
+        $result_sql = $conn->query($sql_estudiante);
 
         if ($result_sql->num_rows > 0) {
-            $fila = $result_sql->fetch_assoc();     
+            $fila = $result_sql->fetch_assoc();
 
-            // Obtener el id_carrera segun el plan_carrera.
-            $sql_id_carrera = "SELECT id_carrera FROM carrera WHERE nombre_carrera = ?";
-            $stmt_id_carrera = $conn->prepare($sql_id_carrera);
-            $stmt_id_carrera->bind_param("s", $fila['plan_carrera']);
-            $stmt_id_carrera->execute();
-            $result_id_carrera = $stmt_id_carrera->get_result();
+            // Obtener el id_carrera según el plan_carrera.
+            $sql_id_carrera = "SELECT id_carrera FROM carrera WHERE nombre_carrera = '" . $fila['plan_carrera'] . "'";
+            $result_id_carrera = $conn->query($sql_id_carrera);
 
             if ($result_id_carrera->num_rows > 0) {
                 $fila_id_carrera = $result_id_carrera->fetch_assoc();
@@ -57,31 +49,24 @@
             echo "<tr><td colspan='5'>No se encontraron datos para este estudiante.</td></tr>";
         }
 
-        // Obtener las materias según el año seleccionado en el select.
-            if (isset($_GET['anio_carrera'])) {
+        // Obtener las materias según el año seleccionado.
+        if (isset($_GET['anio_carrera'])) {
             $anio_carrera = $_GET['anio_carrera'];
-            
-            $sql_materias = "SELECT id_materia, denominacion_materia FROM materia WHERE anio_carrera = ?";
-            $stmt_materias = $conn->prepare($sql_materias);
-            $stmt_materias->bind_param("i", $anio_carrera);
-            $stmt_materias->execute();
-            $result_materias = $stmt_materias->get_result();
-            
+            $sql_materias = "SELECT id_materia, denominacion_materia FROM materia WHERE anio_carrera = $anio_carrera";
+            $result_materias = $conn->query($sql_materias);
+
             if ($result_materias->num_rows > 0) {
                 while ($rowm = $result_materias->fetch_assoc()) {
                     echo '<div class="form-check">';
                     echo '<input class="form-check-input" type="checkbox" name="asignar_materia[]" value="' . $rowm['id_materia'] . '" id="materia' . $rowm['id_materia'] . '">';
                     echo '<label class="form-check-label" for="materia' . $rowm['id_materia'] . '">' . $rowm['denominacion_materia'] . '</label>';
                     echo '</div>';
-
                 }
             }
-            
-            $stmt_materias->close();
             exit();
         }
 
-        // Ingresa los datos del formulario para la tabla cursada.
+        // Ingresa los datos del formulario a la tabla cursada.
         if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (isset($_POST['asignar_materia'])) {
                 $materias_seleccionadas = $_POST['asignar_materia'];
@@ -92,44 +77,32 @@
                 $horario_cursada = $_POST['horario_cursada'];
                 $fecha_estado_materia = $_POST['fecha_estado_materia'];
 
-                // Inserta los datos ingresados en el formulario a la tabla cursada.
-
-                $sql_insert = "INSERT INTO cursada (id_estudiante, id_ciclo_electivo, estado_inscripcion, estado_materia, horario_cursada, id_materia, id_carrera, fecha_estado_materia) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-                $stmt_insert = $conn->prepare($sql_insert);
-
                 // Procesa cada materia seleccionada.
                 foreach ($materias_seleccionadas as $id_materia) {
-
-                    $id_materia = (int)$id_materia; // Se asegura de que es un entero.
-                    $stmt_insert->bind_param("iissssss", $id_estudiante, $id_ciclo_electivo, $estado_inscripcion, $estado_materia, $horario_cursada, $id_materia, $id_carrera, $fecha_estado_materia);
-                    
-                    // Ejecuta la consulta.
-                    if (!$stmt_insert->execute()) {
-                        $mensaje = "<div class='alert alert-danger text-center' style='widht: 100%'>
+                    // Inserta los datos en la tabla cursada sin proteger contra inyecciones SQL.
+                    $sql_insert = "INSERT INTO cursada (id_estudiante, id_ciclo_electivo, estado_inscripcion, estado_materia, horario_cursada, id_materia, id_carrera, fecha_estado_materia) VALUES ($id_estudiante, $id_ciclo_electivo, '$estado_inscripcion', '$estado_materia', '$horario_cursada', $id_materia, $id_carrera, '$fecha_estado_materia')";
+                    if (!$conn->query($sql_insert)) {
+                        $mensaje = "<div class='alert alert-danger text-center' style='width: 100%'>
                                         <h4 class='alert-heading'>¡Error al asignar las materias!</h4>
-                                        <p>Hubo un problema al asignar las materias: " . $stmt_insert->error . "</p>
+                                        <p>Hubo un problema al asignar las materias: " . $conn->error . "</p>
+                                    </div>";
+                    } else {
+                        $mensaje = "<div class='container mt-4'>
+                                        <div class='alert alert-success text-center' style='max-width: 100%;'>
+                                            <h4 class='alert-heading'>¡Materias asignadas correctamente!</h4>
+                                            <p>El registro se ha ingresado exitosamente en la base de datos.</p>
+                                            <hr>
+                                            <a href='tablaestudiantes.php' class='btn btn-primary'>Volver a la lista de estudiantes</a>
+                                        </div>
                                     </div>";
                     }
-                }
-
-                $stmt_insert->close();
-                if (empty($mensaje)) {
-
-                    $mensaje = "<div class='container mt-4 style= 'Margin: 0 auto';'>
-                                    <div class='alert alert-success text-center' style='max-width: 100%;'>
-                                        <h4 class='alert-heading'>¡Materias asignadas correctamente!</h4>
-                                        <p>El registro se ha ingresado exitosamente en la base de datos.</p>
-                                        <hr>
-                                        <a href='tablaestudiantes.php' class='btn btn-primary'>Volver a la lista de estudiantes</a>
-                                    </div>
-                                </div>";
                 }
             }
         }
 
         include(rutas::$pathNuevoHeader);
     ?>
-
+    
     <style>
         .table {
             width: 100%;
