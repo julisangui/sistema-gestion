@@ -13,7 +13,7 @@
         include "variablesPath.php";
         require(rutas::$pathConection);
 
-        // Verifica si se ha pasado el ID de estudiante.
+        // Se obtiene el ID del estudiante.
         if (isset($_GET['id_estudiante'])) {
             $id_estudiante = $_GET['id_estudiante'];
         } else {
@@ -27,7 +27,7 @@
         $sql_ciclos = "SELECT id_ciclo_electivo, nombre_ciclo FROM ciclo_electivo";
         $result_ciclos = $conn->query($sql_ciclos);
 
-        // Trae el plan_carrera del estudiante estudiante seleccionado.
+        // Trae el plan_carrera del estudiante seleccionado.
         $sql_estudiante = "SELECT plan_carrera FROM estudiantes WHERE id_estudiante = $id_estudiante";
         $result_sql = $conn->query($sql_estudiante);
 
@@ -79,7 +79,8 @@
 
                 // Procesa cada materia seleccionada.
                 foreach ($materias_seleccionadas as $id_materia) {
-                    // Inserta los datos en la tabla cursada sin proteger contra inyecciones SQL.
+                    
+                    // Ingresa los datos en la tabla cursada.
                     $sql_insert = "INSERT INTO cursada (id_estudiante, id_ciclo_electivo, estado_inscripcion, estado_materia, horario_cursada, id_materia, id_carrera, fecha_estado_materia) VALUES ($id_estudiante, $id_ciclo_electivo, '$estado_inscripcion', '$estado_materia', '$horario_cursada', $id_materia, $id_carrera, '$fecha_estado_materia')";
                     if (!$conn->query($sql_insert)) {
                         $mensaje = "<div class='alert alert-danger text-center' style='width: 100%'>
@@ -142,15 +143,14 @@
                     </tr>
                 </thead>
                 <tbody>                    
-                    
-                    <?php
+                <?php
                     // Trae los datos del estudiante                                           
                     $sql_estudiante = "SELECT dni_estudiante, nro_legajo, nombre, apellido, plan_carrera FROM estudiantes WHERE id_estudiante = ?";
                     $stmt_estudiante = $conn->prepare($sql_estudiante);
                     $stmt_estudiante->bind_param("i", $id_estudiante);
                     $stmt_estudiante->execute();
                     $result_sql = $stmt_estudiante->get_result();
-    
+
                     if ($result_sql->num_rows > 0) {
                             $fila = $result_sql->fetch_assoc();     
                             echo "<tr>";
