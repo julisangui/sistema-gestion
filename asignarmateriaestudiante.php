@@ -9,7 +9,7 @@
     <title>Asignar materia</title>
 </head>
 <body>
-<?php
+    <?php
         include "variablesPath.php";
         require(rutas::$pathConection);
 
