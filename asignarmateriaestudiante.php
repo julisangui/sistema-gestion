@@ -45,6 +45,7 @@
                 echo "<h5 style='color: #CA2E2E;'>ID de carrera no encontrado.</h5>";
                 exit();
             }
+
         } else {
             echo "<tr><td colspan='5'>No se encontraron datos para este estudiante.</td></tr>";
         }
@@ -54,7 +55,6 @@
             $anio_carrera = $_GET['anio_carrera'];
             $sql_materias = "SELECT id_materia, denominacion_materia FROM materia WHERE anio_carrera = $anio_carrera";
             $result_materias = $conn->query($sql_materias);
-
             if ($result_materias->num_rows > 0) {
                 while ($rowm = $result_materias->fetch_assoc()) {
                     echo '<div class="form-check">';
