@@ -397,7 +397,6 @@
                 <textarea class="form-control" id="observaciones" name="observaciones" placeholder="Observaciones" rows="3"><?php echo htmlspecialchars($student_data['observaciones'] ?? ''); ?></textarea>
             </div>
         </div>
-        <a href="tablaestudiantes.php" class="btn btn-secondary">Volver</a>
         <button type="submit" class="btn btn-primary">Actualizar Datos</button>
     </form>
 

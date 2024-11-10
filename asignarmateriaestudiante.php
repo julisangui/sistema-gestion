@@ -150,7 +150,6 @@
                     $stmt_estudiante->bind_param("i", $id_estudiante);
                     $stmt_estudiante->execute();
                     $result_sql = $stmt_estudiante->get_result();
-
                     if ($result_sql->num_rows > 0) {
                             $fila = $result_sql->fetch_assoc();     
                             echo "<tr>";
@@ -171,7 +170,7 @@
                     <div class="columna">
                         <label class="form-label text-black-50 mt-3">Seleccionar Ciclo electivo:</label>
                         <select id="id_ciclo_electivo" name="id_ciclo_electivo" class="form-select" required>
-                            <option hidden>Seleccione un ciclo electivo</option>
+                            <option value="" hidden>Seleccione un ciclo electivo</option>
                             <?php while ($row = $result_ciclos->fetch_assoc()): ?>
                             <option value="<?= $row['id_ciclo_electivo'] ?>"><?= $row['nombre_ciclo'] ?></option>
                             <?php endwhile; ?>
@@ -180,7 +179,7 @@
                     <div class="columna">
                         <label class="form-label text-black-50 mt-3">Estado de Inscripción:</label>
                         <select name="estado_inscripcion" class="form-select" required>
-                            <option hidden>Seleccione un estado de la inscripción</option>
+                            <option value="" hidden>Seleccione un estado de la inscripción</option>
                             <option value="completo">Completo</option>
                             <option value="en curso">En curso</option>
                             <option value="incompleto">Incompleto</option>
@@ -189,7 +188,7 @@
                     <div class="columna">
                         <label class="form-label text-black-50 mt-3">Estado de Materia:</label>
                         <select name="estado_materia" class="form-select" required>
-                            <option hidden>Seleccione un estado</option>
+                            <option value="" hidden>Seleccione un estado</option>
                             <option value="aprobada">Aprobada</option>
                             <option value="reprobada">Reprobada</option>
                             <option value="cursando">Cursando</option>
@@ -203,7 +202,7 @@
                     <div class="columna">
                         <label class="form-label text-black-50 mt-3">Horario de Cursada:</label>
                         <select name="horario_cursada" class="form-select" required>
-                            <option hidden>Seleccione un horario</option>
+                            <option value="" hidden>Seleccione un horario</option>
                             <option value="08:00-10:00">08:00 - 10:00</option>
                             <option value="10:00-12:00">10:00 - 12:00</option>
                             <option value="14:00-16:00">14:00 - 16:00</option>
@@ -218,7 +217,7 @@
                 <div class="columna">
                     <label class="form-label text-black-50 mt-3">Seleccionar Año:</label>
                     <select id="anio_carrera" name="anio_carrera" class="form-select" onchange="cargarMaterias()">
-                        <option hidden>Seleccione un año</option>
+                        <option value="" hidden>Seleccione un año</option>
                         <option value="1">Año 1</option>
                         <option value="2">Año 2</option>
                         <option value="3">Año 3</option>

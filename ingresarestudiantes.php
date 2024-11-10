@@ -65,7 +65,7 @@
         echo "
         <div class='container mt-4 style= 'Margin: 0 auto';'>
             <div class='alert alert-success text-center' style='max-width: 95%;'>
-                <h4 class='alert-heading'>¡Datos actualizados correctamente!</h4>
+                <h4 class='alert-heading'>¡Datos ingresados correctamente!</h4>
                 <p>El registro se ha actualizado exitosamente en la base de datos.</p>
                 <hr>
                 <a href='tablaestudiantes.php' class='btn btn-primary'>Ver lista de estudiantes</a>
@@ -114,7 +114,7 @@
         <div class="columna">
           <label class="form-label text-black-50" for="tipo_documento">Tipo documento *</label>
           <select class="form-control select" id="tipo_documento" name="tipo_documento" required>
-            <option hidden>seleccionar</option>
+            <option value="" hidden>seleccionar</option>
             <option value="DNI">DNI</option>
           </select>
         </div>
@@ -131,7 +131,7 @@
         <div class="columna">
           <label class="form-label text-black-50" for="genero">Género *</label>
           <select class="form-control select" id="genero" name="genero" required>
-            <option hidden>seleccionar</option>
+            <option value="" hidden>seleccionar</option>
             <option value="Masculino">Masculino</option>
             <option value="Femenino">Femenino</option>
             <option value="Otro">Otro</option>
@@ -155,7 +155,7 @@
       <div class="columna">
         <label class="form-label text-black-50" for="familia_a_cargo">Familia a cargo *</label>
         <select class="form-control select" id="familia_a_cargo" name="familia_a_cargo" required>
-          <option hidden>seleccionar</option>
+          <option value="" hidden>seleccionar</option>
           <option value="Sí">Sí</option>
           <option value="No">No</option>
         </select>
@@ -163,7 +163,7 @@
       <div class="columna">
         <label class="form-label text-black-50" for="hijos">Hijos *</label>
         <select class="form-control select" id="hijos" name="hijos" required>
-          <option hidden>seleccionar</option>
+          <option value="" hidden>seleccionar</option>
           <option value="0">0</option>
           <option value="1">1</option>
           <option value="2">2</option>
@@ -174,7 +174,7 @@
       <div class="columna">
         <label class="form-label text-black-50" for="trabaja">Trabaja *</label>
         <select class="form-control select" id="trabaja" name="trabaja" required>
-          <option hidden>seleccionar</option>
+          <option value="" hidden>seleccionar</option>
           <option value="Sí">Sí</option>
           <option value="No">No</option>
         </select>
@@ -257,7 +257,7 @@
         <div class="columna">
           <label class="form-label text-black-50" for="titulo_certificado">Título Certificado *</label>
           <select class="form-control select" id="titulo_certificado" name="titulo_certificado" placeholder="Título Certificado" required>
-            <option hidden>seleccionar</option>
+            <option value="" hidden>seleccionar</option>
             <option value="Sí">Sí</option>
             <option value="No">No</option>
           </select>
@@ -265,7 +265,7 @@
         <div class="columna">
           <label class="form-label text-black-50" for="titulo_tecnico">Título Técnico *</label>
           <select class="form-control select" id="titulo_tecnico" name="titulo_tecnico" placeholder="Título Técnico" required>
-            <option hidden>seleccionar</option>
+            <option value="" hidden>seleccionar</option>
             <option value="Sí">Sí</option>
             <option value="No">No</option>
           </select>
@@ -273,7 +273,7 @@
         <div class="columna">
           <label class="form-label text-black-50" for="titulo_hab">Título Habilitante *</label>
           <select class="form-control select" id="titulo_hab" name="titulo_hab" placeholder="Título Habilitante" required>
-            <option hidden>seleccionar</option>
+            <option value="" hidden>seleccionar</option>
             <option value="Sí">Sí</option>
             <option value="No">No</option>
           </select>
@@ -309,7 +309,7 @@
       <div class="columna">
         <label class="form-label text-black-50" for="documentacion_completa">Documentación Completa *</label>
         <select class="form-control select" id="documentacion_completa" name="documentacion_completa" required>
-          <option hidden>seleccionar</option>
+          <option value="" hidden>seleccionar</option>
           <option value="Completa">Completa</option>
           <option value="Incompleta">Incompleta</option>
         </select>
@@ -336,7 +336,7 @@
               if ($result->num_rows > 0) {
                   echo '<label class="form-label text-black-50" for="plan_carrera">Plan de Carrera *</label>';
                   echo '<select class="form-control select" id="plan_carrera" name="plan_carrera" required>';
-                  echo '<option hidden>Seleccionar</option>';
+                  echo '<option value="" hidden>Seleccionar</option>';
                     while($row = $result->fetch_assoc()) {
                         echo '<option value="' . htmlspecialchars($row['nombre_carrera']) . '">' . htmlspecialchars($row['nombre_carrera']) . '</option>';
                         // Aca se generan las opciones (carreras) traidas desde la tabla "carrera".
@@ -353,7 +353,7 @@
           <div class="columna">
             <label class="form-label text-black-50" for="estado_inscripcion">Estado de Inscripción *</label>
             <select class="form-control select" id="estado_inscripcion" name="estado_inscripcion" required>
-              <option hidden>seleccionar</option>
+              <option value="" hidden>seleccionar</option>
               <option value="Completo">Completo</option>
               <option value="Incompleto">Incompleto</option>
             </select>
@@ -361,7 +361,7 @@
           <div class="columna">
             <label class="form-label text-black-50" for="estado_estudiante">Estado del Estudiante *</label>
             <select class="form-control select" id="estado_estudiante" name="estado_estudiante" required>
-              <option hidden>seleccionar</option>
+              <option value="" hidden>seleccionar</option>
               <option value="Activo">Activo</option>
               <option value="Inactivo">Inactivo</option>
             </select>
@@ -375,8 +375,8 @@
     </div>
   
     <div class="btn_form">
-      <button type="reset" class="btn btn-danger">Borrar todo</button>
       <button type="submit" class="btn btn-primary">Guardar</button>
+      <button type="reset" class="btn btn-danger">Borrar todo</button>
     </div>
   </form>
 

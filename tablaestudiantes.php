@@ -27,7 +27,7 @@
   </div>
 
   <style>
-    
+
     .table {
       width: 100%;
       margin: 0 auto;
@@ -80,9 +80,9 @@
 
     if (isset($_GET['enviar'])) { //El if se ejecutara solo si el usuario presiona el boton buscar.
       $busqueda = $_GET['busqueda']; //Aca se lee lo que pone el usuario para buscar y el %(comodin) busca coincidencias.
-      $sql .= " WHERE nro_legajo LIKE '%$busqueda%' 
-        OR nombre LIKE '%$busqueda%' 
-        OR apellido LIKE '%$busqueda%' 
+      $sql .= " WHERE nro_legajo LIKE '%$busqueda%'
+        OR nombre LIKE '%$busqueda%'
+        OR apellido LIKE '%$busqueda%'
         OR dni_estudiante LIKE '%$busqueda%'
         OR estado_estudiante LIKE '%$busqueda%'";
     }
